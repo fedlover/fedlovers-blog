@@ -382,7 +382,7 @@ var PR=win['PR']={'createSimpleLexer':createSimpleLexer,'registerLangHandler':re
   document.head.appendChild(linkEl);
 
   var linkEl = document.createElement('link');
-  linkEl.href = originBase + '/themes/bootstrap-responsive.min.css';
+  linkEl.href = 'https://fedlover.github.io/css/bootstrap_theme.css';
   linkEl.rel = 'stylesheet';
   document.head.appendChild(linkEl);
 

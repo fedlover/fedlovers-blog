@@ -377,7 +377,7 @@ var PR=win['PR']={'createSimpleLexer':createSimpleLexer,'registerLangHandler':re
   document.head.appendChild(linkEl);
 
   var linkEl = document.createElement('link');
-  linkEl.href = originBase + '/strapdown.css';
+  linkEl.href = originBase + '/css/strapdown.css';
   linkEl.rel = 'stylesheet';
   document.head.appendChild(linkEl);
 

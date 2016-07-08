@@ -372,17 +372,17 @@ var PR=win['PR']={'createSimpleLexer':createSimpleLexer,'registerLangHandler':re
 
   // Stylesheets
   var linkEl = document.createElement('link');
-  linkEl.href = 'http://strapdownjs.com' + '/themes/'+theme+'.min.css';
+  linkEl.href = originBase + '/themes/'+theme+'.min.css';
   linkEl.rel = 'stylesheet';
   document.head.appendChild(linkEl);
 
   var linkEl = document.createElement('link');
-  linkEl.href = 'http://strapdownjs.com' + '/strapdown.css';
+  linkEl.href = originBase + '/strapdown.css';
   linkEl.rel = 'stylesheet';
   document.head.appendChild(linkEl);
 
   var linkEl = document.createElement('link');
-  linkEl.href = 'http://strapdownjs.com' + '/themes/bootstrap-responsive.min.css';
+  linkEl.href = originBase + '/themes/bootstrap-responsive.min.css';
   linkEl.rel = 'stylesheet';
   document.head.appendChild(linkEl);
 

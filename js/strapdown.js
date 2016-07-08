@@ -372,7 +372,7 @@ var PR=win['PR']={'createSimpleLexer':createSimpleLexer,'registerLangHandler':re
 
   // Stylesheets
   var linkEl = document.createElement('link');
-  linkEl.href = originBase + '/themes/'+theme+'.min.css';
+  linkEl.href = 'https://fedlover.github.io/css/simple.min.css';
   linkEl.rel = 'stylesheet';
   document.head.appendChild(linkEl);
 

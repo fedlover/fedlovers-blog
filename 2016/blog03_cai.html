@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="generator" content="Pearyman'S BLOG">
+<meta name="author" content="Pearyman">
+<meta name="description" content="html5,css3,app" />
+<meta name="keywords" content="Pearyman,BLOG" />
+<title>nodeJS + AJAX</title>
+<style type="text/css">
+    #content{margin:0 auto 50px; width: 66%; min-height: 600px;}
+    #ds-reset{margin:0 auto; width: 66%;}
+	.ds-powered-by,.navbar,.ds-sync,.ds-comments-info,.ds-meta{display: none;}
+</style>
+<xmp theme="united" style="display:none;">
+# nodeJS + AJAX
+
+-------------------
+场景是这样的
+想自己写个ajax的交互，但是需要后台服务端给我造数据返我api配合才行，咋弄呢？ 听说nodeJS可以从前端跨越到后端，**好神奇的赶脚**。
+听说终究只是听说，还是试试靠谱些
+
+
+### 1，nodeJS安装
+-------------------
+官网，下软件一定要找[官网](https://nodejs.org/en/)
+
+打开官网后，一般官网都会推荐两个版本。一个是稳定版一个是测试版，根据各自需求直接down就可以（看清楚了哈憋下错操作系统的软件了）
+
+然后就安装吧，下一步下一步。。。 就完事了
+
+可能还有其他什么配置，但是我这里都是下一步就可以了（我也只会下一步下一步了  -_-!!）。
+
+运行cmd，查看node版本吧
+执行命令
+`` node -v ``
+![alt title](http://7xw3j4.com1.z0.glb.clouddn.com/node-v.png)       
+
+
+### 2，express4安装
+-------------------
+还是在刚才打开的cmd里哈，执行这个命令
+
+        npm install -g express   (憋以为这就好了哈，安装的只是个相当于express4的环境我个人认为)
+
+这个执行完才算完事 
+
+        npm install -g express-generator
+
+
+到此nodeJS和express4就算安装完了，现在开始创建项目吧
+
+
+### 3，express创建服务端项目
+-------------------
+还是刚才那个cmd 憋关哈 
+
+        express -e xxx (xxx 项目名称)
+
+
+切换到刚建的项目里，在本地添加依赖
+
+        cd xxx 
+
+
+启动
+
+        npm install 
+
+>浏览器输入 
+``localhost:3000``
+页面显示 welcome to express 就代表成功了
+
+##### （1）问：这个页面从哪来的？如果在浏览器输入 localhost:3000/users 又会出现什么页面？
+
+
+##### （2）问：到此为止，ajax哪去了？什么时候出场？
+
+
+### 4，造数据开始~
+--------------------
+把项目文件夹添加到编辑器，大致浏览下文件夹
+
+route相当于mvc的c，views就是v，嗯，我个人是这么理解的
+
+####参考代码
+
+
+好了，我该说的都说完了，该研究的也都研究了。就等机会了。
+
+</xmp>
+<!-- 多说评论框 start -->
+<div class="ds-thread" data-thread-key="1" data-title="js检测手机是否安装某一app" data-url="http://pearyman.github.io/blog/2015/blog02.html"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"pearyman"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<script src="https://fedlover.github.io/js/strapdown.js"></script>
+</html>

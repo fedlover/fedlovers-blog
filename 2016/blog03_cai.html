@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="generator" content="Pearyman'S BLOG">
+<meta name="author" content="Pearyman">
+<meta name="description" content="html5,css3,app" />
+<meta name="keywords" content="Pearyman,BLOG" />
+<title>nodeJS + Express</title>
+<style type="text/css">
+    #content{margin:0 auto 50px; width: 66%; min-height: 600px;}
+    #disqus_thread{margin:0 auto; width: 66%;}
+	.ds-powered-by,.navbar,.ds-sync,.ds-comments-info,.ds-meta{display: none;}
+</style>
+<xmp theme="united" style="display:none;">
+# nodeJS + Express
+
+-------------------
+场景是这样的
+想自己写个ajax的交互，但是需要后台服务端给我造数据返我api配合才行，咋弄呢？ 听说nodeJS可以从前端跨越到后端，**好神奇的赶脚**。赶紧百度看看怎么用才行
+听说终究只是听说，还是试试靠谱些
+
+
+
+### 1，nodeJS安装
+-------------------
+官网，下软件一定要找[官网](https://nodejs.org/en/)
+
+打开官网后，一般官网都会推荐两个版本。一个是稳定版一个是测试版，根据各自需求直接down就可以（看清楚了哈憋下错操作系统的软件了）
+
+然后就安装吧，下一步下一步。。。 就完事了
+
+可能还有其他什么配置，但是我这里都是下一步就可以了（我也只会下一步下一步了  -_-!!）。
+
+运行cmd，查看node版本吧
+执行命令
+`` node -v ``
+![alt title](http://7xw3j4.com1.z0.glb.clouddn.com/node-v.png)       
+
+
+
+### 2，express4安装
+-------------------
+还是在刚才打开的cmd里哈，执行这个命令
+
+        npm install -g express   (憋以为这就好了哈，安装的只是个相当于express4的环境我个人认为)
+
+这个执行完才算完事 
+
+        npm install -g express-generator
+
+
+到此nodeJS和express4就算安装完了，现在开始创建项目吧
+
+
+
+### 3，express创建服务端项目
+-------------------
+还是刚才那个cmd 憋关哈 
+
+        express -e xxx (xxx 项目名称)
+
+
+切换到刚建的项目里，在本地添加依赖
+
+        cd xxx 
+
+
+启动
+
+        npm install 
+
+>浏览器输入 
+``localhost:3000``
+页面显示 welcome to express 就代表成功了  （想想页面上的东西怎么来的，能不能修改）
+
+
+就酱紫的
+![alt title](http://7xw3j4.com1.z0.glb.clouddn.com/express-show.jpg)
+
+
+
+### 4，造数据开始
+--------------------
+把项目文件夹添加到编辑器，大致浏览下文件夹,打开app.js着重看红框框内的
+![alt title](http://7xw3j4.com1.z0.glb.clouddn.com/express-1.png)
+route相当于mvc的c，views就是v，嗯，我个人是这么理解的，找到相应的文件打开
+
+就能晓得刚运行express时成功的那个页面怎么来的了，然后自己还造了一个api
+，routes/api.js
+![alt title](http://7xw3j4.com1.z0.glb.clouddn.com/express-2.png)
+
+
+
+这个就是api了，一般服务端的数据就是这么造的了
+![alt title](http://7xw3j4.com1.z0.glb.clouddn.com/express-3.png)
+
+
+
+我又在页面上添加了一个button然后又给btn添加了绑定了点击事件来触发ajax，从而向服务端拿到了刚才造的api里的数据
+![alt title](http://7xw3j4.com1.z0.glb.clouddn.com/express-4.png)
+
+
+艾玛，最终要实现的就是这个了，好了可以洗洗睡了（直觉告诉我这个肯定还能干很多“大事”，不过暂时是满足了我用ajax拿数据这个事儿）
+
+
+
+
+</xmp>
+<!-- 多说评论框 start -->
+<div id="disqus_thread"></div>
+<script>
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+    /*
+    var disqus_config = function () {
+        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        
+        s.src = '//httpsfedlovergithubio.disqus.com/embed.js';
+        
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+<script src="https://fedlover.github.io/js/strapdown.js"></script>
+</html>

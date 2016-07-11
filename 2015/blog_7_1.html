@@ -8,16 +8,15 @@
 <meta name="description" content="html5,css3,app" />
 <meta name="keywords" content="Pearyman,BLOG" />
 <link rel="Shortcut Icon" href="https://avatars2.githubusercontent.com/u/6932025?v=3&s=460" type="image/ico">
-<title>javascript图片懒加载与预加载的分析</title>
+<title>javascript图片预加载的分析</title>
 <style type="text/css">
     #content{margin:0 auto 50px; width: 66%;}
     #disqus_thread{margin:0 auto; width: 66%;}
 	.ds-powered-by,.navbar ,.ds-sync{display: none;}
 </style>
 <xmp theme="united" style="display:none;">
-# javascript图片预加载与懒加载的分析
+# javascript图片预加载的分析
 ------------------------------------
-## 预加载和懒加载的区别
 
 >### 预加载
 
@@ -25,7 +24,7 @@
 #### *2.优势：* 它是提升用户体验的一个很好的方法。图片预先加载到浏览器中，访问者便可以顺利地在你的网站上冲浪，可以享受极快的加载速度，这对于图片占据很大比例的网站来说非常有利，它既保证了图片快速、无缝地发布，也帮助用户在浏览网站内容时获得更好的用户体验。
 #### *3.弊端：* 会增加服务器前端压力。
 #### *4.实现方式：*实现预加载的方法有很多，可以用CSS(background)、JS(image)、HTML(`<img />`)。常用的是JS(image)对象，把图片下载到本地，让浏览器缓存起来，设置其src来实现加载，再使用onload方法回调加载完成事件。
-![Alt text](http://7xw3j4.com1.z0.glb.clouddn.com/img6.jpg
+![Alt text](http://7xw3j4.com1.z0.glb.clouddn.com/5.gif
 )
 ```
 <script>
@@ -36,25 +35,30 @@
 		"../img/img2.png",
 		"../img/img3.png"
 	]
-	//2、定义一个空数组；
-	var img=[];
-		for(var i=0,len=arr.length;i<len;i++){
-			img[i]=new Image();
-			img[i].src=arr[i];
-		
-	//3、由于浏览器的兼容问题，最好的情况是Image可以有一个状态值表明它是否已经载入成功了（可以使用为各个浏览器所兼容的Image的属性——complete），从缓存加载的时候，因为不需要等待，这个状态值就直接是表明已经下载了，而从http请求加载时，因为需要等待下载，这个值显示为未完成。所以，在图片onload事件之前先对这个值做一下判断即可。
-		if(img[i].complete){//如果图片已经存在于浏览器缓存，直接调用回调函数
-			callback.call(img);
-			return;
-		}
-		img[i].onload=function(){// //图片下载完毕时异步调用callback函数。
-			callback.call(img);;//将回调函数的this替换为Image对象
-		}
-		
-		}
+	
+    function onloadImage(url,callback){
+        //1、定义一个空数组
+             var img=[];
+            for(var i=0,len=url.length;i<len;i++){
+                img[i]=new Image();//创建一个Image对象，实现图片的预下载 
+                img[i].src=url[i];
+                if(img[i].complete){//如果图片已经存在于浏览器缓存，直接调用回调函数
+                    callback.call(img);
+                    return; // 直接返回，不用再处理onload事件 
+                }
+                img[i].onload=function(){//图片下载完毕时异步调用callback函数。
+                    callback.call(img);//将回调函数的this替换为Image对象
+                }
+                
+            }
+        }
+        onloadImage(arr,function(){
+           //把img放入到dom中;
+        })
+        //注：由于浏览器的兼容问题，最好的情况是Image可以有一个状态值表明它是否已经载入成功了（可以使用为各个浏览器所兼容的Image的属性——complete），从缓存加载的时候，因为不需要等待，这个状态值就直接是表明已经下载了，而从http请求加载时，因为需要等待下载，这个值显示为未完成。所以，在图片onload事件之前先对这个值做一下判断即可。
 </script>
 ```
->### 懒加载
+
 
 </xmp>
 

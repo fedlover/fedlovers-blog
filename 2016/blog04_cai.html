@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="generator" content="Pearyman'S BLOG">
+<meta name="author" content="Pearyman">
+<meta name="description" content="html5,css3,app" />
+<meta name="keywords" content="Pearyman,BLOG" />
+<link rel="Shortcut Icon" href="http://7xw3j4.com1.z0.glb.clouddn.com/logo_cai.png" type="image/ico">
+<title>弹性盒布局（一）</title>
+<style type="text/css">
+    #content{margin:0 auto 50px; width: 66%;}
+    #disqus_thread{margin:0 auto; width: 66%;}
+  .ds-powered-by,.navbar ,.ds-sync{display: none;}
+</style>
+<xmp theme="united" style="display:none;">
+#弹性盒布局（一）
+---------------------------
+多栏布局传统的解决方式就是使用float或position，但是在使用float或position时，需要使用包括负外边距（margin）在内的比较复杂的指定方法才能达到需求。
+
+### 1.了解flex布局
+W3C在2009年就提出了一个新的方案---Flex布局，简单，完整，响应式地实现各种页面布局。但是之所以到现在都没有得到普通大众的前端布局应用（web端）最主要的原因就是所有的浏览器只有较高版本的才支持
+
+
+比如
+
+* Chrome    21+
+* Opera     12+
+* Firefox   22+
+* Safari    6.1+
+* IE        10+
+
+
+Flex是Flexible Box的缩写，意思为“弹性布局”，任何一个容器和标签（[行内元素也可以]()）都可以指定为Flex布局，是不是听起来就很爽？![alt title](http://7xw3j4.com1.z0.glb.clouddn.com/blog_04.gif)
+
+
+
+</xmp>
+
+<div id="disqus_thread"></div>
+<script>
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+    /*
+    var disqus_config = function () {
+        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+
+        s.src = '//httpsfedlovergithubio.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+<script src="https://fedlover.github.io/js/strapdown.js"></script>
+</html>
+

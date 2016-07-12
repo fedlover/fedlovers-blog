@@ -8,15 +8,76 @@
 <meta name="description" content="html5,css3,app" />
 <meta name="keywords" content="Pearyman,BLOG" />
 <link rel="Shortcut Icon" href="https://avatars2.githubusercontent.com/u/6932025?v=3&s=460" type="image/ico">
-<title>理解javascript里的回调函数(callback)</title>
+<title>css3的transform属性</title>
 <style type="text/css">
     #content{margin:0 auto 50px; width: 66%;}
     #disqus_thread{margin:0 auto; width: 66%;}
 	.ds-powered-by,.navbar ,.ds-sync{display: none;}
 </style>
 <xmp theme="united" style="display:none;">
-#理解javascript里的回调函数(callback)
->近段时间来，我这个菜鸟(梦想着有一天成为大牛，不过我觉得吧我也就是想想哈！)![Alt text](http://7xw3j4.com1.z0.glb.clouddn.com/cry.gif)在网站上搜过很多关于交互方面的资料，不知道从何时起，满眼看去，到处是callback(以函数作为参数的回调函数的使用)，这个单词就如洪水猛兽一样涌入人们的视线，现在我这个菜鸟就要一层一层的解开它神秘的面纱了，还请大家尽情期待。
+#css3的transform属性
+
+>*课外小知识*
+
+在写这个文章之前，先和大家分享一个我在使用git过程中总是出现的问题
+
+```
+ Administrator@2016-20160616CC MINGW64 /d/fedlover.github.io (lilu)
+ $ git pull origin master
+ Permission denied (publickey).
+ fatal: Could not read from remote repository.
+ Please make sure you have the correct access rights
+ and the repository exists.
+
+```
+如果你检查过后并不是服务器内部的问题，那这时**你只要重新配置下秘钥就可以了！(反正我![Alt-text](http://7xw3j4.com1.z0.glb.clouddn.com/%E5%98%9A%E7%91%9F1_03.jpg)是这样做的!)**
+
+>秘钥的配置方法：
+
+```
+cd ~
+cd .ssh
+vim id_rsa.pub
+
+```
+>*言归正传*
+
+#### 首先、transform是神马东东?
+
+Transform属性应用于元素的2D或3D转换。这个属性允许你将元素旋转，缩放，移动，倾斜等。
+
+#### 其次、CSS3 transform都有哪些常用属性？
+
+transform的属性包括：rotate()[旋转] / skew()[倾斜] / scale()[缩放] / translate()[位移] ，分别还有x、y之分，比如：rotatex() 和 rotatey() ，以此类推。
+
+**注：效果的实现需要两种属性的支撑：A、过渡效果(transition); B、关键帧动画(animation)**
+
+transition和animation的区别：
+
+transition需要触发一个事件 ,而animation在不需要触发任何事件的情况下也可以显式的随着时间变化来改变元 素css的属性值，从而达到一种动画的效果。
+
+一、rotate
+
+[尝试一下》](file:///F:/transform/rotate.html)
+
+语法:
+
+```
+@-webkit-keyframes mymove {
+    0/from{-webkit-transform: rotate(90deg)};
+    50%{-webkit-transform: rotate(180deg)};
+    100%/to{-webkit-transform: rotate(360deg)};
+}
+```
+```
+#myDIV {
+    width: 200px;
+    height:200px;
+    background-color: coral;
+    -webkit-animation: mymove 5s infinite; /* Chrome, Safari, Opera */
+}
+```
+
 
 </xmp>
 

@@ -40,8 +40,9 @@
     git pull origin master
      (在clone仓库时，Git通常会自动创建一个名为master的分支来跟踪 origin/master，将数据同步到本地，完成项目的拉取)
 
-
-#### 深究
+------------------------
+#### **深究**
+------------------------
 git config
 
 
@@ -54,11 +55,14 @@ config是配置的意思，git congif 命令就是对git进行一些配置。git
 * 最后是系统级配置文件，本地安装的git目录下，比如：F:\Git\etc，文件名为：gitconfig
 --------------------
 这三个配置的关系就像css一样。一般来说:
-行内样式
-“<div style="width:200px"></div>”，内嵌样式“<style type="text/css">div {width:200px;}</style>”，还有外联样式“<link rel="stylesheet" href="xxxxx.css" />”
+
+        <div style="width:200px"></div>                   行内样式
+        <style type="text/css">div {width:200px;}</style> 内嵌样式
+        <link rel="stylesheet" href="xxxxx.css" />        还有外联样式
 
 
-这三种样式是一样的，权重依次是行内>内嵌>外联。类似的，对于git来说，配置文件
+这三种样式是一样的，权重依次是行内>内嵌>外联。类似的，对于git来说，配置文件的权重是仓库>全局>系统。Git会使用一系列的配置文件来存储你定义的偏好，所以如果是公司的电脑上只有gitlab就可以大胆的直接配置全局的，如果是使用自己的笔记本，最好还是直接在仓库里配置config，这样才互不影响。
+
 
 
 

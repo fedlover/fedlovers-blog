@@ -17,7 +17,11 @@
 <xmp theme="united" style="display:none;">
 #Git拉取GitLab上的项目
 ---------------------------
-前些天给电脑装了个SSD，嗯，很好，跟重装了系统一样。啥啥都不好使了，最最最重要的git上连接公司用的gitlab也出问题了。下载安装git，然后一切重新开始......
+前些天给电脑装了个SSD，嗯，很好，跟重装了系统一样，啥啥都不好使了。最最最重要的git上连接公司用的gitlab也出问题了，能切进去分支，pull不行，push也不行，上网百度各种答案都有，最后实在搞不定了请了老大过来。老大过来了后简单问了下我出了什么问题，然后就是一顿噼里啪啦的敲命令。再然后就能走通了，瞬间感觉老大好神奇，我查了半天的资料啊简直了，已献上双膝 ![alt title](http://7xw3j4.com1.z0.glb.clouddn.com/blog_04_2.gif)
+
+
+---------------------------
+脑袋里赶紧回滚刚才老大敲的命令，因为太快了只能隐约记得几个点，大致整理了一下。
 
 ### 1. Git global setup（全局配置）
     git config --global user.name "yougithubname"
@@ -33,7 +37,28 @@
 ### 3.git clone （克隆项目）
     git clone git@git.xxxxx.com:xx/xxxx.git
     cd xxxx      （切换到刚才clone下来的项目的文件夹里）
-    git pull origin master      (在clone仓库时，Git通常会自动创建一个名为master的分支来跟踪 origin/master，将数据同步到本地，完成项目的拉取)
+    git pull origin master
+     (在clone仓库时，Git通常会自动创建一个名为master的分支来跟踪 origin/master，将数据同步到本地，完成项目的拉取)
+
+
+#### 深究
+git config
+
+
+config是配置的意思，git congif 命令就是对git进行一些配置。git的配置文件一共有3个，3个？ 是的 ，你没有看错，我也没有胡说，是3个！
+
+
+* 首先是[仓库级配置文件]()，该文件位于当前仓库下，路径.git/ ,文件名为 .gitconfig,这个配置中的设置只对当前所在仓库有效。
+* 第二个是全局级配置文件，以个人pc为例：C:\User\xxxx，文件名为 .gitconfig全局级配置文件
+![alt title](http://7xw3j4.com1.z0.glb.clouddn.com/blog_04_3.png)
+* 最后是系统级配置文件，本地安装的git目录下，比如：F:\Git\etc，文件名为：gitconfig
+--------------------
+这三个配置的关系就像css一样。一般来说:
+行内样式
+“<div style="width:200px"></div>”，内嵌样式“<style type="text/css">div {width:200px;}</style>”，还有外联样式“<link rel="stylesheet" href="xxxxx.css" />”
+
+
+这三种样式是一样的，权重依次是行内>内嵌>外联。类似的，对于git来说，配置文件
 
 
 

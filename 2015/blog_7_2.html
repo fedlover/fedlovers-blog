@@ -17,9 +17,9 @@
 <xmp theme="united" style="display:none;">
 #css3的transform属性
 
->*课外小知识*
+>#####课外小知识
 
-在写这个文章之前，先和大家分享一个我在使用git过程中总是出现的问题
+在写这个文章之前，先和大家分享一个我在使用git过程中出现的问题
 
 ```
  Administrator@2016-20160616CC MINGW64 /d/fedlover.github.io (lilu)
@@ -40,7 +40,7 @@ cd .ssh
 vim id_rsa.pub
 
 ```
->*言归正传*
+>#####言归正传
 
 #### 首先、transform是神马东东?
 
@@ -70,10 +70,10 @@ transform的属性包括：rotate(deg[度])[旋转] / skew(deg[度])[倾斜] / s
             text-align: center;
             line-height: 100px;
             color:#fff;
-            -webkit-transition:all 1s ease-in;
-            -moz-transition:all 1s ease-in;
-            -o-transition:all 1s ease-in;
-            transition:all 1s ease-in;
+            -webkit-transition:all 1s ease-in;/* 谷歌、safari */
+            -moz-transition:all 1s ease-in;/* 火狐 */
+            -o-transition:all 1s ease-in;/* 欧朋 */
+            transition:all 1s ease-in;/* 标准浏览器 */
         }
 
 #rotate:hover{
@@ -119,7 +119,7 @@ transform的属性包括：rotate(deg[度])[旋转] / skew(deg[度])[倾斜] / s
         }
 ```
 
-[想看效果,就快来点我吧!]()
+[点击效果](http://htmlpreview.github.io/?https://github.com/LSYY888/transform/blob/master/form/rotate.html)
 
 2、scale(缩放)
 
@@ -190,7 +190,7 @@ transform:scaleY(2);
             transform:scale3d(0,0,1);
         }
 ```
-[想看效果,就快来点我吧!]()
+[点击效果](http://htmlpreview.github.io/?https://github.com/LSYY888/transform/blob/master/form/scale.html)
 
 3、skew(倾斜)
 
@@ -246,7 +246,7 @@ transform:scaleY(2);
             transform:skew(45deg,45deg);
         }
 ```
-[想看效果,就快来点我吧!]()
+[点击效果](http://htmlpreview.github.io/?https://github.com/LSYY888/transform/blob/master/form/skew.html)
 
 4、translate
 
@@ -296,6 +296,36 @@ transform:scaleY(2);
             transform:translateY(100px);
         }
 ```
+(D)translate3d()/translateZ()
+
+优势；这两个属性都会开启GPU硬件加速模式，从而让浏览器在渲染动画时从CPU转向GPU
+
+当然也可以这样开启所有浏览器的GPU硬件加速：
+
+![Alt text](http://7xw3j4.com1.z0.glb.clouddn.com/z.png)
+                                               
+或
+
+![Alt text](http://7xw3j4.com1.z0.glb.clouddn.com/3d.png)
+
+[点击效果](http://htmlpreview.github.io/?https://github.com/LSYY888/transform/blob/master/form/translate.html)
+
+#### 总结 (四个属性综合效果)
+
+```
+#total{
+            display:block;
+            margin:100px;
+            width: 200px;
+            height: 200px;
+            background:red;
+            -webkit-transition:all 1s ease-in;
+        }
+        #total:hover{
+            -webkit-transform:translate(200px) rotate(180deg) scale(1.5) skew(45deg);
+        }
+```
+[点击效果](http://htmlpreview.github.io/?https://github.com/LSYY888/transform/blob/master/form/total.html)
 </xmp>
 
 <div id="disqus_thread"></div>

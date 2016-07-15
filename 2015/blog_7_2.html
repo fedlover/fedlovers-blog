@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="generator" content="Pearyman'S BLOG">
+<meta name="author" content="Pearyman">
+<meta name="description" content="html5,css3,app" />
+<meta name="keywords" content="Pearyman,BLOG" />
+<link rel="Shortcut Icon" href="https://avatars2.githubusercontent.com/u/6932025?v=3&s=460" type="image/ico">
+<title>css3的transform属性</title>
+<style type="text/css">
+    #content{margin:0 auto 50px; width: 66%;}
+    #disqus_thread{margin:0 auto; width: 66%;}
+	.ds-powered-by,.navbar ,.ds-sync{display: none;}
+</style>
+<xmp theme="united" style="display:none;">
+#css3的transform属性
+
+>#####课外小知识
+
+在写这个文章之前，先和大家分享一个我在使用git过程中出现的问题
+
+```
+ Administrator@2016-20160616CC MINGW64 /d/fedlover.github.io (lilu)
+ $ git pull origin master
+ Permission denied (publickey).
+ fatal: Could not read from remote repository.
+ Please make sure you have the correct access rights
+ and the repository exists.
+
+```
+如果你检查过后并不是服务器内部的问题，那这时**你只要重新配置下秘钥就可以了！(反正我![Alt-text](http://7xw3j4.com1.z0.glb.clouddn.com/%E5%98%9A%E7%91%9F1_03.jpg)是这样做的!)**
+
+秘钥的配置方法：
+
+```
+cd ~
+cd .ssh
+vim id_rsa.pub
+
+```
+>#####言归正传
+
+#### 首先、transform是神马东东?
+
+Transform属性应用于元素的2D或3D转换。这个属性允许你将元素旋转，缩放，移动，倾斜等。
+
+#### 其次、CSS3 transform都有哪些常用属性？
+
+transform的属性包括：rotate(deg[度])[旋转] / skew(deg[度])[倾斜] / scale()[缩放] / translate()[位移] ，分别还有x、y之分，比如：skewX() 和 skewY() ，以此类推。
+
+**注：效果的实现需要两种属性的支撑：A、过渡效果(transition)[transition需要触发一个事件(比如；hover)]; B、关键帧动画(animation)[animation不需要触发任何事件]**
+
+#####**这篇文章我主要是通过使用transition来实现效果:**
+
+1、rotate(旋转)
+
+**注：rotate只能传入一个参数值，transform:rotate(45deg，45deg); 这种语法在浏览器是不支持的，则可以通过分别设置rotateX,rotateY来实现想要的效果！**
+
+(A)rotate(x,y->2d)二维
+
+```
+#rotate{
+            display:block;
+            margin:50px 0 0 100px;
+            width: 100px;
+            height: 100px;
+            background:blue;
+            text-align: center;
+            line-height: 100px;
+            color:#fff;
+            -webkit-transition:all 1s ease-in;/* 谷歌、safari */
+            -moz-transition:all 1s ease-in;/* 火狐 */
+            -o-transition:all 1s ease-in;/* 欧朋 */
+            transition:all 1s ease-in;/* 标准浏览器 */
+        }
+
+#rotate:hover{
+            -webkit-transform:rotate(45deg);/* 谷歌、safari */
+            -moz-transform:rotate(45deg);/* 火狐 */
+            -o-transform:rotate(45deg);/* 欧朋 */
+            transform:rotate(45deg);/* 标准浏览器 */
+        }
+```
+
+(B)rotateX
+
+```
+#rotateX:hover{
+            -webkit-transform:rotateX(180deg);
+            -moz-transform:rotateX(180deg);
+            -o-transform:rotateX(180deg);
+            transform:rotateX(180deg);
+        }
+```
+(C)rotateY
+
+```
+#rotateY:hover{
+            -webkit-transform:rotateY(180deg);
+            -moz-transform:rotateY(180deg);
+            -o-transform:rotateY(180deg);
+            transform:rotateY(180deg);
+        }
+```
+(D)rotate3d(rotate3d(x,y,z,angle))三维旋转
+
+**rotate3d(X,Y,Z,angle)**;也就是你需要对你需要旋转的轴(X,Y,Z)进行判断，如果你要沿着该轴转动那就将该轴的值设置为1，否则为0；然后在后面的angle中设置旋转的角度，需要注意的是，angle只有一个角度值。
+
+![Alt-text](http://7xw3j4.com1.z0.glb.clouddn.com/rotate3d.jpg)
+
+```
+#rotate3d:hover{
+            -webkit-transform:rotate3d(1,1,0,180deg);
+            -moz-transform:rotate3d(1,1,0,180deg);
+            -o-transform:rotate3d(1,1,0,180deg);
+            transform:rotate3d(1,1,0,180deg);
+        }
+```
+
+[点击效果](http://htmlpreview.github.io/?https://github.com/LSYY888/transform/blob/master/form/rotate.html)
+
+2、scale(缩放)
+
+**
+注:
+1、scale的参数值如果是大于等于1，则表示扩大; 如果是小于1，则表示缩小; 如果是负值，则是改变方向;
+2、scale()的参数是一个值时,等于scale(x,y)
+**
+
+(A)scale(1.5)=scale(1.5,1.5)
+
+```
+#scale{
+            display:block;
+            margin:150px 100px 0 150px;
+            float:left;
+            width: 220px;
+            height:147px;
+            background:url(./img/girl.jpg) no-repeat;
+            -webkit-transition:all 2s ease-in;
+            -moz-transition:all 2s ease-in;
+            -o-transition:all 2s ease-in;
+            transition:all 2s ease-in;
+}
+
+
+#scale:hover{
+            -webkit-transform:scale(1.5);
+            -moz-transform:scale(1.5);
+            -o-transform:scale(1.5);
+            transform:scale(1.5);
+        }
+```
+(B)scaleX
+
+默认值是1，基点在元素的中心位置。可以通过transform-origin来改变基点
+transform:scaleX(2);
+
+```
+#scaleX:hover{
+            -webkit-transform:scaleX(1.5);
+            -moz-transform:scaleX(1.5);
+            -o-transform:scaleX(1.5);
+            transform:scaleX(1.5);
+        }
+```
+(C)scaleY
+
+基点一样在元素的中心位置。可以通过transform-origin来改变基点
+transform:scaleY(2);
+
+```
+#scaleY:hover{
+            -webkit-transform:scaleY(1.5);
+            -moz-transform:scaleY(1.5);
+            -o-transform:scaleY(1.5);
+            transform:scaleY(1.5);
+        }
+```
+
+(D)scale3d(scale3d(sx,sy,sz))->如果sx,sy都为1，相当于scaleZ的效果
+
+```
+#scale3d:hover{
+            -webkit-transform:scale3d(0,0,1);
+            -moz-transform:scale3d(0,0,1);
+            -o-transform:scale3d(0,0,1);
+            transform:scale3d(0,0,1);
+        }
+```
+[点击效果](http://htmlpreview.github.io/?https://github.com/LSYY888/transform/blob/master/form/scale.html)
+
+3、skew(倾斜)
+
+(A)skew(deg)=skewX(deg)
+
+可以在效果中看到，元素向左倾斜45度(自己给角度),产生变形，之所以变形，是因为我给了这个元素一个固定的高度(高度自己定)，只要你倾斜的角度不为180度，它都会保持着固定的高度，同时为了保持倾斜，只能拉长本身。（围绕X轴倾斜，保持高度；围绕Y轴倾斜，保留宽度。）
+若倾斜角度为180的倍数，元素将不可见
+
+首先需要说明的是skew的默认原点transform-origin是这个物件的中心点
+
+![Alt text](http://7xw3j4.com1.z0.glb.clouddn.com/skewX.jpg)
+
+```
+#skew{
+        display:block;
+        margin:150px 100px 0 100px;
+        width: 200px;
+        height: 200px;
+        background:red;
+        -webkit-transition:all 2s ease-in;
+        -moz-transition:all 2s ease-in;
+        -o-transition:all 2s ease-in;
+        transition:all 2s ease-in;
+        }
+    #skew:hover{
+        -webkit-transform:skew(45deg);
+        -moz-transform:skew(45deg);
+        -o-transform:skew(45deg);
+        transform:skew(45deg);
+    }
+```
+(B)skewY
+
+![Alt text](http://7xw3j4.com1.z0.glb.clouddn.com/skewY.jpg)
+```
+#skewY:hover{
+            -webkit-transform:skewY(45deg);
+            -moz-transform:skewY(45deg);
+            -o-transform:skewY(45deg);
+            transform:skewY(45deg);
+        }
+```
+(C)skew(deg,deg)
+两个参数，第一个参数表示沿着X轴方向倾斜,第二个参数表示沿着Y轴方向倾斜
+
+![Alt text](http://7xw3j4.com1.z0.glb.clouddn.com/skew.jpg)
+
+```
+#skewTwo:hover{
+            -webkit-transform:skew(45deg,45deg);
+            -moz-transform:skew(45deg,45deg);
+            -o-transform:skew(45deg,45deg);
+            transform:skew(45deg,45deg);
+        }
+```
+[点击效果](http://htmlpreview.github.io/?https://github.com/LSYY888/transform/blob/master/form/skew.html)
+
+4、translate
+
+**注：translate()为1个值的情况,它等于translateX();tanslate()为2个值的情况,translate(x,y);**
+
+(A)translate()
+
+![Alt text](http://7xw3j4.com1.z0.glb.clouddn.com/translate.jpg)
+
+```
+#translate{
+            display:block;
+            width: 200px;
+            height: 200px;
+            background:yellow;
+            -webkit-transition:all 2s ease-out;
+            -moz-transition:all 2s ease-out;
+            -o-transition:all 2s ease-out;
+            transition:all 2s ease-out;
+        }
+        #translate:hover{
+            -webkit-transform:translate(100px);
+            -moz-transform:translate(100px);
+            -o-transform:translate(100px);
+            transform:translate(100px);
+        }
+```
+(B)translate(x,y)
+
+```
+#translate2d:hover{
+            -webkit-transform:translate(100px,100px);
+            -moz-transform:translate(100px,100px);
+            -o-transform:translate(100px,100px);
+            transform:translate(100px,100px);
+        }
+```
+(C)translateY()
+
+![Alt text](http://7xw3j4.com1.z0.glb.clouddn.com/translateY.jpg)
+
+```
+#translateY:hover{
+            -webkit-transform:translateY(100px);
+            -moz-transform:translateY(100px);
+            -o-transform:translateY(100px);
+            transform:translateY(100px);
+        }
+```
+(D)translate3d()/translateZ()
+
+优势；这两个属性都会开启GPU硬件加速模式，从而让浏览器在渲染动画时从CPU转向GPU
+
+当然也可以这样开启所有浏览器的GPU硬件加速：
+
+![Alt text](http://7xw3j4.com1.z0.glb.clouddn.com/z.png)
+                                               
+或
+
+![Alt text](http://7xw3j4.com1.z0.glb.clouddn.com/3d.png)
+
+[点击效果](http://htmlpreview.github.io/?https://github.com/LSYY888/transform/blob/master/form/translate.html)
+
+#### 总结 (四个属性综合效果)
+
+```
+#total{
+            display:block;
+            margin:100px;
+            width: 200px;
+            height: 200px;
+            background:red;
+            -webkit-transition:all 1s ease-in;
+        }
+        #total:hover{
+            -webkit-transform:translate(200px) rotate(180deg) scale(1.5) skew(45deg);
+        }
+```
+[点击效果](http://htmlpreview.github.io/?https://github.com/LSYY888/transform/blob/master/form/total.html)
+</xmp>
+
+<div id="disqus_thread"></div>
+<script>
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+    /*
+    var disqus_config = function () {
+        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        
+        s.src = '//httpsfedlovergithubio.disqus.com/embed.js';
+        
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+<script src="https://fedlover.github.io/js/strapdown.js"></script>
+</html>
+
+	

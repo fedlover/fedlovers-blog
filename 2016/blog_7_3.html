@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="generator" content="Pearyman'S BLOG">
+<meta name="author" content="Pearyman">
+<meta name="description" content="html5,css3,app" />
+<meta name="keywords" content="Pearyman,BLOG" />
+<link rel="Shortcut Icon" href="https://avatars2.githubusercontent.com/u/6932025?v=3&s=460" type="image/ico">
+<title>jquery遍历中的each方法</title>
+<style type="text/css">
+    #content{margin:0 auto 50px; width: 66%;}
+    #disqus_thread{margin:0 auto; width: 66%;}
+	.ds-powered-by,.navbar ,.ds-sync{display: none;}
+</style>
+<xmp theme="united" style="display:none;">
+#jquery遍历中的each方法
+
+>对于jQuery对象，只是把each方法简单的进行了委托：把jQuery对象作为第一个参数传递给jQuery的each方法。换句话说：jQuery提供的each方法是对参数一提供的对象的中所有的子元素逐一进行方法调用
+
+一、each的三种遍历方法
+
+1、选择器+遍历
+
+            $('div').each(function (i){
+               i就是索引值
+               this 表示获取遍历每一个dom对象
+            });
+            console.log(this)
+                <div data-id="btn1">btn1</div>
+                <div data-id="btn2">btn2</div>
+            console.log($(this))
+                [div,context:div]
+                [div,context:div]    
+
+2、选择器+遍历
+
+            $('div').each(function (index,domEle){
+               index就是索引值
+              domEle 表示获取遍历每一个dom对象
+            });
+            console.log(i)
+                 0
+                 1   
+            console.log(domEle)
+                <div data-id="btn1">btn1</div>
+                <div data-id="btn2">btn2</div>
+
+3、*更适用的遍历方法*(也是在工作中最常用的)
+
+            1）先获取某个集合对象
+            2）遍历集合对象的每一个元素
+            var d=$("div");
+            $.each(d,function (index,domEle){
+              d是要遍历的集合
+              index就是索引值
+              domEle 表示获取遍历每一个dom对
+            });
+
+ $().each和$.each()的区别：
+
+    $().each,对于这个方法，在dom处理上面用的较多;
+
+    $.each(),对于这个方法，在遍历数组和对象上用的比较多;            
+
+二、**each方法的几种常用用法**[重点]
+
+        1、一维数组
+
+        var arr=["one","two","three"];
+            $.each(arr,function(key,value){
+                    console.log(key)
+                            0
+                            1
+                            2
+                    console.log(value)
+                            one 
+                            two 
+                            three
+                    console.log(arr[key])
+                            one
+                            two
+                            three
+                    console.log(arr[value]) **没有这种书写方式**
+                            undefined                
+            })
+
+            获取单个值
+            console.log(arr[0])
+                    one
+
+
+        2、对象
+
+        var obj={"name":"习大大","sex":"男","nation":"中国"};
+             $.each(obj,function(key,value){
+                console.log(key)
+                        name
+                        sex
+                        nation
+                console.log(value)
+                        习大大
+                        男
+                        中国
+                console.log(obj[key])
+                        习大大
+                        男
+                        中国
+                console.log(obj[value]) **没有这种书写方式**
+                        undefined
+             })
+
+             获取单个值
+             console.log(obj.name)
+                        习大大   
+
+        3、二维数组
+            
+            var arr=[[1,2,3],[4,5,6],[7,8,9]] 
+               $.each(arr,function(key,value){
+                    console.log(key)
+                          0
+                          1
+                          2
+                    console.log(value)
+                        [1,2,3]
+                        [4,5,6]
+                        [7,8,9]
+                    $.each(value,function(k,v){
+                        console.log(k)
+                        0,1,2
+                        0,1,2
+                        0,1,2
+                        console.log(v)
+                        1,2,3,4,5,6,7,8,9
+                    })
+            })
+
+        4、**数组对象**(在工作中最多使用的)
+
+             var obj =[{"name":"项海军","password":"123456"},{"name":"科比","password":"333333"},{"name":"乔丹","password":"444444"}];
+                 $.each(obj,function(key,value){
+                        console.log(key)
+                                0
+                                1
+                                2
+                        console.log(value)
+                            object{"name":"项海军","password":"123456"}
+                            object{"name":"科比","password":"333333"}
+                            object{"name":"乔丹","password":"444444"}
+
+                        取得具体的某一项
+                        console.log(value.name)
+                                项海军
+                                科比
+                                乔丹
+
+                 })
+
+
+补充的知识点
+
+#### 一、this和$(this)的区别
+
+        this是html本身的属性或方法(我们可以把它理解为是原生javascript的属性和方法);
+
+        $(this)是jquery包装后的属性或方法
+
+ ![Alt-text](http://7xw3j4.com1.z0.glb.clouddn.com/this.png)
+</xmp>
+
+<div id="disqus_thread"></div>
+<script>
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+    /*
+    var disqus_config = function () {
+        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        
+        s.src = '//httpsfedlovergithubio.disqus.com/embed.js';
+        
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+<script src="https://fedlover.github.io/js/strapdown.js"></script>
+</html>
+
+	

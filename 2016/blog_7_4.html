@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="generator" content="Pearyman'S BLOG">
+<meta name="author" content="Pearyman">
+<meta name="description" content="html5,css3,app" />
+<meta name="keywords" content="Pearyman,BLOG" />
+<link rel="Shortcut Icon" href="https://avatars2.githubusercontent.com/u/6932025?v=3&s=460" type="image/ico">
+<title>javascript中的闭包</title>
+<style type="text/css">
+    #content{margin:0 auto 50px; width: 66%;}
+    #disqus_thread{margin:0 auto; width: 66%;}
+	.ds-powered-by,.navbar ,.ds-sync{display: none;}
+</style>
+<xmp theme="united" style="display:none;">
+##javascript中的闭包
+>序言
+
+"闭包"这个词相信学前端的同学都听过,不知道大家学完后的感受是怎样的,反正直到现在我一听到这个词,心里就发毛,总感觉没有好事发生。原因无乎两点：1、它在javascript中确实是一个非常难的一个知识点，牵扯甚广，一不小心就全军覆没的(连偶的偶像汤姆大叔都说难耶！更何况我这个小喽喽[哎！自我心里安慰])；2、主观反面：脑洞小，思维跳跃力简直弱爆了。但我相信，“世上无难事，只怕有心人”，虽然它很难，但是只要我们每天学习一点，每天积累一点，总有一天我们会“因上努力，果上随缘”。
+
+##一、"牵扯甚广"
+
+为了更好的理解闭包，必须先掌握以下这几个知识点,大家不要因为怕烦从而就半路"转粉"哦,只有一步一步的深入,我们才能更深的理解它的意境。
+
+###1、执行上下文
+
+它可以让我们知道为什么某些函数以及变量在没有被声明以前就可以被使用，以及它们的最终的值是怎样被定义的。
+
+**(一、)Javascript中代码的运行环境分为三种：**
+
+全局级别的代码--这个是默认的代码运行环境，一旦代码被载入，引擎最先进入的就是这个环境;
+
+函数级别的代码--当执行一个函数时，运行函数体中的代码;
+
+Eval的代码--在Eval函数内运行的代码;
+
+下面我们来看一个示例，其中包括了全局以及函数级别的执行上下文：
+
+![Alt text](http://7xw3j4.com1.z0.glb.clouddn.com/%E4%B8%8A%E4%B8%8B%E6%96%87.png)
+
+上图中一共用了4个执行上下文。紫色的代表全局的上下文;绿色的代表person函数内的上下文;蓝色和橙色代表person函数内的另外两个函数的上下文。不管什么情况下，只存在一个全局的上下文，该上下文能被任何其它的上下文所访问到。至于函数上下文的个数是没有任何限制的，每到调用执行一个函数时，引擎就会自动新建出一个函数上下文，换句话说，就是新建一个局部作用域，可以在该局部作用域中声明私有变量等，在外部的上下文中是无法直接访问到该局部作用域内的元素的。那么引擎内部是怎样处理的呢?
+
+**(二、)执行上下文堆栈**
+
+![Alt text](http://7xw3j4.com1.z0.glb.clouddn.com/%E4%B8%8A%E4%B8%8B%E6%96%87%E5%A0%86%E6%A0%88.jpg)
+
+在浏览器中，javascript引擎的工作方式是单线程的。也就是说，某一时刻只有唯一的一个事件是被激活处理的，其它的事件被放入队列中，等待被处理。当javascript代码文件被浏览器载入后，默认最先进入的是一个全局的执行上下文。当在全局上下文中调用执行一个函数时，程序流就进入该被调用函数内，此时引擎就会为该函数创建一个新的执行上下文，并且将其压入到执行上下文堆栈的顶部。浏览器总是执行当前在堆栈顶部的上下文，一旦执行完毕，该上下文就会从堆栈顶部被弹出，保存在其中的所有变量和函数定义随之销毁,然后，进入其下的上下文执行代码。这样，堆栈中的上下文就会被依次执行并且弹出堆栈，直到回到全局的上下文。
+            
+**(三、)执行上下文的执行过程**
+
+1、建立阶段(发生在当调用一个函数时，但是在执行函数体内的具体代码之前)
+
+建立变量，函数，arguments对象，参数
+
+建立作用域链
+
+确定this的值
+
+2、代码执行阶段:执行函数体中的代码，一行一行地运行代码，给variableObject中的变量属性赋值。
+
+```
+function foo(i){
+    var a='hello';
+    var b=function private(){
+
+    };
+    function c(){
+
+    }
+}
+foo(5);
+
+在调用foo(5)时，建立阶段如下:
+
+fooExecutionContext = {
+   variableObject: {
+       arguments: {
+           0: 5,
+           length: 1
+       },
+       i: 5,
+       c: pointer to function c()
+       a: undefined
+   },
+   scopeChain: { ... },
+   this: { ... }
+}
+
+执行阶段：
+
+fooExecutionContext = {
+   variableObject: {
+       arguments: {
+           0: 5,
+           length: 1
+       },
+       i: 5,
+       c: pointer to function c()
+       a: 'hello'
+   },
+   scopeChain: { ... },
+   this: { ... }
+}
+
+```
+由此可见，在建立阶段，除了arguments，函数的声明，以及参数被赋予了具体的属性值，其它的变量属性默认的都是undefined。一旦上述建立阶段结束，引擎就会进入代码执行阶段，这个阶段完成后，我们看到，只有在代码执行阶段，变量属性才会被赋予具体的值。
+
+###2、作用域链
+
+在一个环境中执行代码时(执行上下文)，我们要先创建一个变量对象的一个作用域链，以此来保证执行环境(执行上下文)有权访问的变量和函数
+的有序访问。作用域第一个对象始终是当前执行代码所在环境的变量对象。
+
+让我们用具体的例子来体会下:
+
+```
+var x=10;
+function foo(){
+    var y=20;
+    function bar(){
+        var z=30;
+        alert(x+y+z) //60
+    }
+    bar()
+}
+foo();
+```
+对此，我们有如下的变量/活动对象，函数的的[[scope]]属性以及上下文的作用域链：
+
+**三步骤:**
+
+a、创建 [[scope]] (不包含自身);
+
+b、激活(自身的属性和函数);
+
+c、作用域链(创建+激活);
+
+**具体例子如下:**
+
+全局上下文的变量对象是:
+
+```
+globalContext.VO={
+    x:10
+    foo:<reference to function>
+};
+```
+在"foo"创建时，"foo"的[[scope]]属性是*(不包含自己)*：
+
+```
+foo.[[scope]]=[
+    globalContext.VO
+]
+```
+在"foo"激活时(进入上下文),"foo"上下文的活动对象是*(自身的属性和函数)*:
+
+```
+fooContext.AO={
+    y:20,
+    bar:<reference to function>
+}
+```
+"foo"上下文的作用域链为*(创建+激活)*:
+
+```
+fooContext.Scope=foo.[[scope]]+fooContext.AO
+fooContext.Scope=[
+    globalContext.VO,
+    fooContext.AO
+]
+```
+内部函数"bar"创建时,"bar"的[[scope]]属性是*(不包含自己)*:
+ 
+ ```
+ bar.[[scope]]=[
+    globalContext.VO,
+    fooContext.AO
+ ]
+ ```
+ 在"bar"激活时(进入上下文),"bar"上下文的活动对象是*(自身的属性和函数)*:
+
+ ```
+ barContext.AO={
+    z:30
+ }
+ ```
+ "bar"上下文的作用域链为*(创建+激活)*:
+
+ ```
+ barContext.Scope=bar.[[scope]]+barContext.AO
+ barContext.Scope=[
+    globalContext.VO,
+    fooContext.AO,
+    barContext.AO
+ ]
+ ```
+ 对"x"、"y"、"z"的标识符解析如下(自己和下文):
+
+ ```
+ -"x"
+ --globalContext.VO //10
+ --fooContext.AO //not found
+ --barContext.AO //not found
+
+ -"y"
+ --fooContext.AO //20
+ --barContext.AO //not found
+
+ -"z"
+ --barContext.AO //30
+```
+####**例外:**
+
+通过构造函数创建的函数的[[scope]]属性总是唯一的全局对象。
+
+###3、变量对象
+
+通过简单的例子热热身--相信各位看官通过上面的作用域链的相关例子很容易理解这个变量对象
+
+```
+var a=10;
+function test(x){
+  var b=20;
+}
+test(30);
+```
+
+对应的变量对象是(自身的属性和函数):
+
+```
+全局上下文的变量对象
+
+VO(globalContext)={
+  a:10,
+  test:<reference to function>
+}
+```
+
+```
+test函数上下文的变量对象
+
+VO(test functionContext)={
+  x:30,
+  b:20
+};
+```
+
+##二、"正主驾到"
+
+1、闭包是什么？
+
+闭包：就是在另一个作用域中保存了一份它从上一级函数或是作用域取得的变量,而这些变量是不会随着上一级函数的执行完成而销毁的。
+
+2、闭包的特征？
+
+(一、)函数中包含着函数;
+
+(二、)内部函数用return返回;
+
+3、闭包的几种写法？
+
+A、第1种写法(构造函数):
+
+```
+  function Circle(r,s){
+  //初始化参数
+    this.r=r;
+    this.s=s;
+  }
+  Circle.prototype.area=function(){
+    return this.r+this.s;
+  };
+  var c=new Circle(1,5);
+  console.log(c.area());
+
+```
+B、第2种写法
+
+```
+var Circle=function(){
+    var obj=new Object();
+    obj.PI=3.14159;//属性
+    obj.area=function(r){//方法
+      return this.PI*r;
+    }
+    return obj;
+}
+
+var c=new Circle();
+alert(c.area(10));
+这种写法是声明一个变量,将一个函数当作值赋给变量。
+```
+C、第3种写法
+
+```
+var circle=new Object();
+    circle.PI=3.14159;
+    circle.area=function(r){
+      return this.PI*r;
+    }
+    console.log(circle.area(20));
+这种写法最简单,就是new一个对象，然后给这个对象添加属性和方法    
+```
+D、第四种写法
+
+```
+var circle={
+  "PI":3.14159,
+  "area":function(r){
+    return this.PI*r
+  }
+}
+console.log(circle.area(20));
+这种方法使用最多,也最方便。
+```
+总的来说,上面四种写法中,第2种和第4种最为常见,大家可以根据习惯自行选择
+
+4、闭包的用途？
+
+**两个最大的用处**:
+
+1、可以读取到函数内部的变量;
+
+2、这些变量的值始终保持在内存中。
+
+(一、)匿名自执行函数
+
+好处:不会污染全局变量。
+
+```
+var data={
+  table:[],
+  tree:{}
+};
+(function(dm){
+  for(var i=0;i<dm.table.rows;i++){
+    var row=dm.table.rows[i];
+    for(var j=0;j<row.cells;j++){
+      drawCell(i,j);
+    }
+  }
+})(data)
+
+我们创建了一个匿名的函数，并立即执行它，由于外部无法引用它内部的变量，
+因此在执行完后很快就会被释放,因此不会污染全局对象。
+```
+
+
+(二、)实现封装
+
+```
+在person之外的地方无法访问其内部的变量，而通过提供闭包的形式来访问
+var person=function(){
+//变量作用域为函数内部,外部无法访问
+  var name="default";
+  return {
+    getName:function(){
+      return name;
+    },
+    setName:function(newName){
+      name=newName;
+    }
+  }
+}()
+console.log(person.name);//undefined
+console.log(person.getName());//default
+person.setName("希盟");
+console.log(person.getName());//希盟
+```
+
+
+(三、)实现面向对象中的对象
+
+
+
+```
+john和jack都可以称为是Person这个类的实例，因为这两个实例对name这个成员的访问是独立的，互不影响的。
+function person(){
+  var name="default";
+  return {
+    getName:function(){
+      return name
+    },
+    setName:function(newName){
+      name=newName;
+    }
+  }
+}
+
+var job=person();
+console.log(job.getName());//default
+job.setName(北京希盟");
+console.log(job.getName());//北京希盟
+
+var jack=person();
+console.log(jack.getName());//default
+jack.setName("深圳希盟");
+console.log(jack.getName());//深圳希盟
+```
+
+
+</xmp>
+
+<div id="disqus_thread"></div>
+<script>
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+    /*
+    var disqus_config = function () {
+        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        
+        s.src = '//httpsfedlovergithubio.disqus.com/embed.js';
+        
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+<script src="https://fedlover.github.io/js/strapdown.js"></script>
+</html>
+
+	

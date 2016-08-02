@@ -256,8 +256,8 @@ a:link {
 	text-decoration: none;
 }
 [class*="col-"] {
-	padding-top: 15px;
-	padding-bottom: 15px;
+	/*padding-top: 15px;*/
+	/*padding-bottom: 15px;*/
 	border: none;
 }
 /* Responsive tables fix for Firefox */
@@ -316,8 +316,8 @@ a.meta,
 	transition: all ease .3s;
 }
 hr {
-  margin-top: 40px;
-  margin-bottom: 40px;
+  /*margin-top: 40px;*/
+  /*margin-bottom: 40px;*/
 }
 /* Placeholder text color */
 input[placeholder],

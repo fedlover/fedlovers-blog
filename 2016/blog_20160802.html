@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="generator" content="Pearyman'S BLOG">
+<meta name="author" content="Pearyman">
+<meta name="description" content="html5,css3,app" />
+<meta name="keywords" content="Pearyman,BLOG" />
+<link rel="Shortcut Icon" href="https://avatars2.githubusercontent.com/u/6932025?v=3&s=460" type="image/ico">
+<title>vue.js(一)</title>
+<style type="text/css">
+    #content{margin:0 auto 50px; width: 66%;}
+    #disqus_thread{margin:0 auto; width: 66%;}
+	.ds-powered-by,.navbar ,.ds-sync{display: none;}
+</style>
+<xmp theme="united" style="display:none;">
+
+##vue.js起步
+
+学前端的小伙伴们应该都或多或少的接触过MVVM这个概念,接触过angularjs的同学都知道，它就是一个MVVM的一个框架。先让我们回顾下什么是MVVM：
+
+View一般就是我们平常说的HTML文本的Js模板，里面可以嵌入一些js模板的代码
+
+ViewModule层里面就是我们对于这个视图区域的一切js可视业务逻辑，举个例子,比如表单按钮点击提交，这些自定义事件的注册和处理逻辑都写在ViewModule里面了
+
+Module就更简单了，就是对于纯数据的处理，比如增删改查，与后台CGI做交互
+
+###心中有数
+
+一、MVC
+
+MVC模式的意思以及各部分之间相互通信的关系
+
+视图（View）：用户界面。
+
+控制器（Controller）：业务逻辑。
+
+模型（Model）：数据保存。
+
+#####单向模式
+
+![Alt-text](http://7xw3j4.com1.z0.glb.clouddn.com/mvc-1.png)
+
+1、View传送指令到Controller;
+
+2、Controller完成业务逻辑后,要求Model改变状态;
+
+3、Model将新的数据发送到View,用户得到反馈;
+
+#####互动模式
+
+两种模式:一种是通过View接收指令,传递给Controller;
+
+![Alt-text](http://7xw3j4.com1.z0.glb.clouddn.com/mvc-2.png)
+
+另一种是直接通过Controller来接收指令;
+
+![Alt-text](http://7xw3j4.com1.z0.glb.clouddn.com/mvc-3.png)
+
+二、MVVM
+
+MVVM模式把Controller改名为ViewModel
+
+![Alt-text](http://7xw3j4.com1.z0.glb.clouddn.com/mvvm-1.png)
+
+1、View 与 Model 不发生联系，都通过 ViewModel 传递。
+
+2、View 非常薄，不部署任何业务逻辑，称为"被动视图"（Passive View），即没有任何主动性，而 ViewModel非常厚，所有逻辑都部署在那里。
+
+3、View的变动，自动反映在 ViewModel，反之亦然
+
+###Vue.js的基本应用
+
+一、什么是vue.js?
+
+用于构建交互式的Web界面的库。
+
+提供了一个MVVM数据绑定和一个可组合的组合系统。
+
+二、vue.js有哪些特点?
+
+**简洁： HTML 模板 + JSON 数据，再创建一个 Vue 实例，就这么简单。**
+
+数据驱动视图概念：就是 在普通 HTML 模板中使用特殊的语法将 DOM “绑定”到底层数据。 一旦创建了绑定，DOM 将与数据保持同步。每当修改了数据，DOM 便相应地更新。就不需要因为改变了HTML标签从而需要更改数据，这让我们的代码更容易撰写、理解与维护。
+
+组件化： 可以用独立可复用的小组件来构建大型应用。
+
+指令：是Vue.js提供的特殊特性，指令带有前缀v-，如：v-if。
+
+三、vue.js的基本操作
+
+1、Hello Vue.js
+
+```
+View层html文件
+
+<div id="app">
+  {{message}}-->Hello Vue.js
+</div>
+
+在Vue.js中,ViewModels是实例化的Vue的构造器或者是它的子类
+
+<script>
+  new Vue({
+    el:'#app',    // The View
+    data:{      //提供初始数据    // The Model
+      message:"Hello Vue.js"
+    }
+  })
+</script>
+```
+2、数据双向绑定**(v-model)**
+
+```
+
+<div id="app">
+  <p>{{message}}</p>
+  <input type="text" v-model="message"> //以输入框为标准
+</div>
+
+<script>
+  new Vue({
+    el:'#app',
+    data:{
+      message:"希盟CIM"
+    }
+  })
+</script>
+```
+效果(http://jsbin.com/remogilahi/edit?html,console,output)
+
+3、循环**(v-for)**
+
+```
+<div id="app">
+    <ul>
+        <li v-for="i in todos">//循环li 数据为name
+            {{i.name+i.people}}
+        </li>
+    </ul>
+</div>
+
+<script>
+  new Vue({
+    el:"#app",
+    data:{
+      todos:[
+        {name:"北京",people:111},
+        {name:"上海",people:111},
+        {name:"广州",people:111},
+        {name:"深圳",people:111}
+      ]
+    }
+  })
+</script>
+```
+效果(http://jsbin.com/bihafeqepi/edit?html,output)
+
+4、处理用户的输入
+
+```
+<div id="app">
+    <p>{{message}}</p>
+    <button v-on:click="CIM">希盟信康</button>
+</div>
+<script>
+
+  //the viewModel
+
+    new Vue({
+      el:"#app",      //the view
+      data:{           //the model
+        message:"hello 希盟信康"
+      },
+      methods:{
+        CIM:function(){
+          this.message=this.message.split("").reserve().join("");
+        }
+      }
+
+    })
+</script>
+```
+效果(http://jsbin.com/heburejeho/edit?html,js,output)
+
+5、v-if指令
+
+```
+<div class="example">
+    <p v-if="greeting">hello 希盟信康</p>
+</div>
+
+<script>
+    new Vue({
+        el:".example",
+        data:{
+          greeting:true/false   --->hello 希盟信康/空
+        }
+    })
+</script>
+```
+
+5、综合
+
+```
+<div id="app">
+    <input type="text" v-model="message" v-on:keyup.enter="addTodo">
+    <ul>
+        <li v-for="i in todos">
+            <span>{{i.name}}</span>
+            <button v-on:click="removeTodo($index)">X</button>
+        </li>
+    </ul>
+</div>
+
+<script>
+  new Vue({
+      el:"#app",
+      data:{
+        message:"",
+        todos:[
+            {name:"老九门"},
+            {name:"九州天空城"},
+            {name:"W两个世界"},
+            {name:"幻城"}
+        ]
+      },
+      methods:{
+        addTodo:function(){
+          var text=this.message.trim();   //文本框的值不为空
+          if(text){   //如果不为空，当按下回车键时，把文本框的值追加到todos
+            this.todos.push({name:text});
+            this.message=""; //追加后，值清空
+          }
+        },
+        removeTodo:function(index){
+          this.todos.splice(index,1);   //删除-用于删除元素，两个参数，第一个参数（要删除第一项的位置），第二个参数（要删除的项数）
+        }
+      }
+  })
+</script>
+```
+效果(http://jsbin.com/sofezusiyu/edit?html,css,output)
+
+</xmp>
+
+<div id="disqus_thread"></div>
+<script>
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+    /*
+    var disqus_config = function () {
+        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        
+        s.src = '//httpsfedlovergithubio.disqus.com/embed.js';
+        
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+<script src="https://fedlover.github.io/js/strapdown.js"></script>
+</html>
+
+	

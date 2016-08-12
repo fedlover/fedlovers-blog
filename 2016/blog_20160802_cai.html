@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="generator" content="Pearyman'S BLOG">
+<meta name="author" content="Pearyman">
+<meta name="description" content="html5,css3,app" />
+<meta name="keywords" content="Pearyman,BLOG" />
+<link rel="Shortcut Icon" href="http://7xw3j4.com1.z0.glb.clouddn.com/logo_cai.png" type="image/ico">
+<title>css控制文字显示一行 超出部分隐藏且显示省略号</title>
+<style type="text/css">
+    #content{margin:0 auto 50px; width: 66%;}
+    #disqus_thread{margin:0 auto; width: 66%;}
+  .ds-powered-by,.navbar ,.ds-sync{display: none;}
+</style>
+<xmp theme="united" style="display:none;">
+#css 文字超出部分隐藏且显示省略号
+-----------------------------------
+工作中经常用到，现在总结下
+
+### demo
+    <style type="text/css">
+      p {
+        width:100px;            //设置显示文本容器宽度
+        white-space:nowrap;     //强制不换行
+        overflow:hidden;        //自动隐藏
+        text-overflow:ellipsis; //文字隐藏后添加省略号
+      }
+    </style>
+
+    <p>我是文字示例不用在乎我我是文字示例不用在乎我我是文字示例不用在乎我我是文字示例不用在乎我我是文字示例不用在乎我我是文字示例不用在乎我我是文字示例不用在乎我我是文字示例不用在乎我我是文字示例不用在乎我我是文字示例不用在乎我我是文字示例不用在乎我</p>
+
+
+[click demo](http://jsbin.com/rafinefeco/edit?html,output)
+
+
+** 1 white-space **
+
+
+white-space属性生命建立布局过程中如何处理元素中空白符。（空白符指：键盘敲入的空格或回车）
+
+    wschool 上 white-space的值
+
+    normal    默认。空白会被浏览器忽略
+
+    pre       空白会被浏览器保留。其行为方式类似HTML中的<pre>标签
+
+    nowrap    文本不会换行，文本会在同一行上继续，直到遇到<br>标签为止
+
+    pre-wrap  保留空白符序列，但是正常地进行换行
+
+    prc-line  合并空白符序列，但保留换行符
+
+    inherit   规定应该从父元素继承 white-space 属性的值
+
+
+**text-overflow: ellipsis**
+
+
+这个是这里的重点样式
+很有意思的一个样式： text-overflow 属性仅是注解，当文本溢出时是否显示省略标记并不具备它的样式属性定义。 要实现溢出时产生省略号的效果还须定义：强制文本在一行内显示就这个属性（white-space：nowrap；）
+
+
+简单的就是说，我先把文本限制在一行（white-space：nowrap），然后这一行肯定还有宽度限制，如果文本溢出了我限制的这个宽度我就把它溢出的部分隐藏（overflow：hidden；），然后出现省略号（text-overflow: ellipsis）
+
+
+兼容性颇好，   最变态的ie6+ 都已支持，放心大胆的用吧，好使
+
+
+
+
+
+</xmp>
+
+<div id="disqus_thread"></div>
+<script>
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+    /*
+    var disqus_config = function () {
+        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+
+        s.src = '//httpsfedlovergithubio.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+<script src="https://fedlover.github.io/js/strapdown.js"></script>
+</html>
+

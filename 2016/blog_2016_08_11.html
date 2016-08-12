@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="generator" content="Pearyman'S BLOG">
+<meta name="author" content="Pearyman">
+<meta name="description" content="html5,css3,app" />
+<meta name="keywords" content="Pearyman,BLOG" />
+<link rel="Shortcut Icon" href="https://avatars2.githubusercontent.com/u/6932025?v=3&s=460" type="image/ico">
+<title>vue.js(二)</title>
+<style type="text/css">
+    #content{margin:0 auto 50px; width: 66%;}
+    #disqus_thread{margin:0 auto; width: 66%;}
+	.ds-powered-by,.navbar ,.ds-sync{display: none;}
+</style>
+<xmp theme="united" style="display:none;">
+
+##vue.js(二)
+
+####一、概述：
+
+1、数据驱动视图概念：就是把Dom和数据绑定在一起，同步进行，当改变数据时，Dom同步进行更新；不需要因为改变了HTML标签，而需要更改数据。
+
+2、指令：是vue.js提供的特殊特性，指令带有前缀v-,如：v-if;
+
+3、组件系统:用独立的可复用的小组件的组成的一个大型项目。vue.js组件非常类似于自定义元素，如：`<app-nav></app-nav>`
+
+####二、vue.js实例(实例的的组成部分)
+
+1、构造器:每个vue应用的起步都通过构造函数创建一个vue根实例， Vue 实例其实正是一个 MVVM 模式中所描述的 ViewModel - 因此在文档中经常会使用vm 这个变量名。
+
+```
+var vm=new Vue({
+  
+})
+```
+2、组件构造器：只需要知道所有的vue.js组件其实都是被扩展的vue实例
+
+```
+var component=Vue.extend({
+  
+})
+var vm=new component({
+  
+})
+```
+#####3、属性与方法
+
+a、每个vue实例都会代理data的属性和方法;
+
+b、原始数据的更改会影响到Vue实例的data的属性的更改，同样vue实例属性的更改也会影响到原始数据的更改;
+
+c、在创建了实例之后再设置data属性，那么它的更改不会影响到原始数据的更改，同样原始数据的更改也不会影响到实例data属性;
+
+```
+(a、)
+data={a:1}
+var vm=new Vue({
+     data=data
+})
+
+vm.a= = =data.a //true
+
+(b、)
+vm.a=2
+console.log(data.a)=2
+
+(c、)
+var data={a:1}
+var vm=new Vue({
+  data:{
+    a:20
+  }
+})
+
+vm.a!=data.a
+```
+####三、数据绑定语法
+
+1、绑定表达式:放在{{}}中的文本成为绑定表达式。在vue.js中绑定表达式由一个简单的 JavaScript 表达式和可选的一个或多个过滤器构成 ，这些表达式将在所属的 Vue 实例的作用域内计算。
+
+a、javascript表达式
+```
+{{ok?"yes":"no"}}
+{{number+1}}
+{{message.split("").reverse().join("")}}
+```
+b、过滤器
+```
+{{ message | filterA | filterB }}
+```
+2、指令
+
+a、含有参数的指令
+
+`<p v-bind:href="url"></p>`
+“href”参数告诉v-bind指令，href特性跟url表达式的值绑定
+
+b、用于监听DOM事件的指令
+
+`<p v-on:click="event"></p>`
+
+3、缩写
+
+```
+<!-- 完整语法 -->
+<a v-bind:href="url"></a>
+
+<!-- 缩写 -->
+<a :href="url"></a>
+
+<!-- 完整语法 -->
+<a v-on:click="doSomething"></a>
+
+<!-- 缩写 -->
+<a @click="doSomething"></a>
+
+```
+####四、计算属性
+
+vue.js规定绑定表达式为一个的表达式，如果需要多个表达式的逻辑，则需要运用计算属性
+
+```
+<p id="app">{{fullMessage}}</p>
+var vm=new Vue({
+  el:"#app",
+  data:{
+    firstMessage:"希盟",
+    lastMessage:"CIM"
+  },
+  computed:{
+    fullMessage:function(){
+      return this.firstMessage+this.lastMessage;--->希盟CIM
+    }
+  }
+})
+```
+效果：(http://jsbin.com/katufadiho/edit?html,js,output)
+
+####五、class与style绑定
+
+我们用v-bind来处理它们
+
+语法：v-bind:class="{}"
+
+语法: v-bind:style="{}"
+
+a、绑定html中的class
+
+```
+<p id="app" class="static" v-bind:class="{'classA':staticA,'classB':staticB}"></p>
+方法一：
+var vm=new Vue({
+  el:"#app",
+  data:{
+    staticA:true,
+    staticB:false
+  }
+})
+---><p id="app" class="static classA"></p>
+方法二：对象语法
+<p id="app" class="static" v-bind:class="classObject"></p>
+var vm=new Vue({
+  el:"#app",
+  data:{
+    classObject:{
+      classA:false,
+      classB:true
+    }
+  }
+})
+---><p id="app" class="static classB"></p>
+方法三:数组语法
+<p id="app" v-bind:class="[classA,classB]"></p>
+var vm=new Vue({
+  el:"#app",
+  data:{
+    classA:"class-a",
+    classB:"class-b"
+  }
+})
+---><p id="app" class="class-a class-b"></p>
+```
+b、绑定内联样式
+
+语法:v-bind:style="{}";
+```
+方法一：
+<p id="app" v-bind:style="{'color':color,'font-size':fontSize+'px'}"></p>
+var vm=new Vue({
+  el:"#app",
+  data:{
+    color:"red",
+    fontSize:24
+  }
+})
+方法二：对象语法
+ <p id="app" v-bind:style="styleObject">希盟信康</p>
+ var vm=new Vue({
+  el:"#app",
+  data:{
+    styleObject:{
+      color:"orange",
+      fontSize:24+"px",
+      width:100+"px",
+      height:50+"px",
+      border:'1px solid red'
+    }
+  }
+})
+方法三：数组语法
+<p id="app" v-bind:style="[styleOne,styleTwo]">希盟信康</p>
+var vm=new Vue({
+  el:"#app",
+  data:{
+    styleOne: {
+        color:"orange",
+        fontSize:24+"px",
+                },
+    styleTwo: {
+        width:100+"px",
+        height:50+"px",
+        border:'1px solid black'
+    }
+  }
+})
+```
+效果：(http://jsbin.com/lepikoviqu/edit?html,js,output)
+
+####六、条件渲染
+
+1、v-if 是一个指令，把它添加到一个元素上
+```
+<div id="app">
+  <p v-if="is">希盟</p>
+</div>
+var vm=new Vue({
+  el:"#app",
+  data:{
+   is:ture/false
+  }
+})
+
+
+<div id="app">
+    <p v-if="test()">希盟</p>
+</div> 
+
+var vm=new Vue({
+  el:"#app",
+  methods:{
+    test:function(){
+      var result=true;
+      return result;
+    }
+  }
+})
+```
+2、template v-if
+
+因为 v-if 是一个指令，需要将它添加到一个元素上。但是如果我们想切换多个元素呢？此时我们可以把一个 `<template>` 元素当做包装元素，并在上面使用 v-if，最终的渲染结果不会包含它
+
+```
+<div id="app">
+  <template v-if="test()"> 
+    <h1>希盟</h1>
+    <p>走进希盟</p>
+  </template>
+  <template v-else>
+    <h1>CIM</h1>
+    <p>走进CIM</p>
+  </template>
+</div>
+
+var vm=new Vue({
+  el:"#app",
+  methods:{
+    test:function(){
+      var result=false;
+      return result;
+    }
+  }
+})
+
+结果: 如果是true时，显示的是希盟;如果是false时,显示的是CIM
+```
+3、v-show指令
+
+是vue另一个根据条件展示选项的,和v-if用法一样。
+
+```
+<div id="app">
+    <p v-show="willShow">显示显示显示</p>
+    <p v-else>隐藏隐藏隐藏隐藏</p>
+    <button v-on:click="fn()">改变</button>
+</div>
+var vm=new Vue({
+      el:"#app",
+      data:{
+        willShow:true//初始化时是显示的
+      },
+      methods:{
+        fn:function(){
+          if(this.willShow==true){
+              this.willShow=false
+          }else{
+            this.willShow=true;
+          }
+        }
+      }
+    });
+```
+
+注:1、 v-show 不支持 `<template>` 语法。
+
+   2、在组件中，不要使用v-else,而是用另一个v-show来代替v-else
+
+ ####七、列表渲染
+ 
+ 1、v-for 指令
+ ```
+ <ul id="app">
+    <li v-for="(index,content) in items">
+        {{index}}--{{content.message}}
+    </li>
+ </ul>
+ var vm=new Vue({
+      el:"#app",
+      data:{
+        items:[
+          {message:"希盟"},
+          {message:"CIM"}
+        ]
+      }
+ })
+ --->0--希盟
+     1--CIM
+ ``` 
+2、数组变动检测
+    
+a、变异方法(改变原始数组)
+
+  
+    push()
+    pop()
+    shift()
+    unshift()
+    splice()
+    sort()
+    reverse()
+
+    
+    push
+      vm.items.push({message:"北京"},{message:"中国"})
+    pop
+      vm.items.pop({message:"北京"})
+    unshift
+      vm.items.unshift({message:"设计部"},{message:"工程部"})
+    shift
+      vm.items.shift({message:"设计部"})
+    splice
+      vm.items.splice(1,0,{{message:"设计部"}})  //添加
+      vm.items.splice(1,1) //删除 
+      vm.items.splice(1,1,{message:"设计部"}) 删除并替换
+    sort
+      vm.items.sort()
+    reverse
+      vm.items.reverse()           
+
+b、替换数组(不会改变原始数组，而是返回一个新数组)
+
+例如:filter、concat、slice
+
+c、track-by
+
+每个对象都有一个唯一 ID 的属性，可以使用 track-by 特性给 Vue.js 一个提示，Vue.js 因而能尽可能地复用已有实例。在替换数组时，如果 Vue.js 遇到一个包含 _uid: '88f869d' 的新对象，它知道它可以复用这个已有对象的作用域与 DOM 元素。
+
+d、track-by $index
+
+如果没有唯一的键供追踪，可以使用 track-by="$index"，它强制让 v-for 进入原位更新模式
+
+注:如果 v-for 块包含 <input> 元素或子组件，要小心使用 track-by="$index";因为DOM节点不再映射数组元素顺序的改变,不能同步临时状态（比如 <input> 元素的值）以及组件的私有状态。
+
+####七、方法与事件处理器
+
+1、方法处理器
+
+把单击事件绑定到greet方法上。
+
+语法：如：`<button v-on:click="greet">Greet</button>`
+
+2、内联语句处理器 
+
+把单击事件绑定到say语句上。
+    
+语法：如：`<button v-on:click="say('hi')">Say Hi</button>`
+```
+var vm=new Vue({
+      el:"#app",
+      methods:{   //在methods对象中定义方法
+        say:function(msg){
+            alert(msg);-->hi
+        }
+      }
+    })
+```
+注：内联语句想要访问原生的Dom事件，需要用$event
+```
+<button v-on:click="say('hello!', $event)">Submit</button>
+methods: {
+  say: function (msg, event) {
+    // 现在我们可以访问原生事件对象
+    event.preventDefault()
+  }
+}
+```
+3、事件修饰符：
+
+用来处理event.preventDefault()和event.stopPropagation()事件的。
+
+语法：**.prevent .stop .capture .self**
+
+```
+<!-- 阻止单击事件冒泡 -->
+<a v-on:click.stop="doThis"></a>
+
+<!-- 提交事件不再重载页面 -->
+<form v-on:submit.prevent="onSubmit"></form>
+
+<!-- 修饰符可以串联 -->
+<a v-on:click.stop.prevent="doThat">
+
+<!-- 只有修饰符 -->
+<form v-on:submit.prevent></form>
+
+!-- 添加事件侦听器时使用 capture 模式 -->
+<div v-on:click.capture="doThis">...</div>
+
+<!-- 只当事件在该元素本身（而不是子元素）触发时触发回调 -->
+<div v-on:click.self="doThat">...</div>
+```
+实例：
+
+```
+实例一：
+<div id="app">
+  <form action="www.baidu.com" v-on:submit.prevent="onsubmit">
+    <input type="text" name="text" placeholder="请输入文本">
+    <input type="submit" value="提交">
+  </form>
+</div>
+
+var vm=new Vue({
+      el:"#app",
+      methods:{
+        onsubmit:function(){
+          alert("禁止跳转");   //当点击提交时，页面不会跳转
+        }
+      }
+    })
+
+实例二：
+<ul id="app" v-on:click.self="dothing">
+  父级
+  <li>111</li>
+  <li>222</li>
+  <li>333</li>
+</ul>
+
+var vm=new Vue({
+      el:"#app",
+      methods:{
+        dothing:function(){
+          alert("事件准确");  //当点击父级时会有效果显示，点击子级(111、222、333)时不会有效果出现
+        }
+      }
+    })
+```
+4、按键修饰符
+
+```
+<!-- 同上 -->
+<input v-on:keyup.enter="submit">
+
+<!-- 缩写语法 -->
+<input @keyup.enter="submit">
+
+全部的按键别名：
+.enter
+.tab
+.delete
+.esc
+.space
+.up
+.down
+.left
+.right
+```
+
+####八、表单控件绑定
+
+1、基本用法：(v-model 实现数据的双向绑定)
+
+a、text
+```
+<p>{{message}}</p>
+
+<input type="text" v-model="message" placeholder="请输入文本内容">
+```
+b、checkbox
+```
+<div id="app">
+  <input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+  <label for="jack">Jack</label>
+  <input type="checkbox" id="john" value="John" v-model="checkedNames">
+  <label for="john">John</label>
+  <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+  <label for="mike">Mike</label>
+  <br>
+  <span>Checked names: {{ checkedNames}}</span>
+</div>
+var vm=new Vue({
+    el:"#app",
+    data:{
+      checkedNames:[]
+    }
+  })
+```
+效果(http://jsbin.com/tiwowaqoha/edit?html,js,output)
+
+c、radio
+```
+<div id="app">
+  <label for="girl">女</label>
+  <input type="radio" id="girl" v-model="picked" name="sex" value="女">
+  <label for="boy">男</label>
+  <input type="radio" id="boy" v-model="picked" name="sex" value="男">
+  <br>
+  <span>picked:{{picked}}</span>
+</div>
+var vm=new Vue({
+    el:"#app"
+  })
+```
+效果(http://jsbin.com/voyitezibu/edit?html,js,output)
+
+d、select
+```
+<div id="app">
+  <select v-model="selected">
+    <option v-for="item in items">{{item.message}}</option>
+  </select>
+  <span>{{selected}}</span>
+</div>
+
+var vm=new Vue({
+    el:"#app",
+    data:{
+      selected:"北京",  //默认北京这个选项被选中
+      items:[
+        {message:"北京"},
+        {message:"上海"},
+        {message:"广州"},
+        {message:"深圳"}
+      ]
+    }
+  })
+```
+效果(http://jsbin.com/neqihinite/edit?html,js,output)
+
+2、绑定value
+
+语法:v-bind:value=""
+
+####九、过渡
+
+Vue.js 提供非常简单的过渡动画接口。这些过渡动画在 Vue.js 将目标元素插入或移除出 DOM 的时候会自动执行。能够触发动画的指令包括 v-if , v-show 和 v-repeat 。同时，vm 实例的 $appendTo() , $before() , $after() 和 $remove() 方法也会触发动画。
+
+定义动画的方法有三种
+
+1、CSS transition
+
+2、CSS animation
+
+3、JavaScript钩子函数
+
+(一、)css transition
+
+只需要在目标元素上添加v-transition指令
+
+```
+<p class="msg" v-if="show" v-transition>Hello!</p>
+
+css:
+.msg {
+    transition: all .3s ease;
+    height: 30px;
+    padding: 10px;
+    background-color: #eee;
+    overflow: hidden;
+}
+.msg.v-enter, .msg.v-leave {
+    height: 0;
+    padding: 0 10px;
+    opacity: 0;
+}
+```
+
+然后需要给目标元素定义两个CSS类：.v-enter(元素插入到DOM节点后立即移除)、.v-leave(元素被移除瞬间的状态。Vue.js 会在侦听到 transitionend 事件以后移除它。)
+
+(二、)css animation
+
+需要在目标元素上添加v-animation指令。v-enter 现在不是在插入后立刻移除，而是在侦听到 animationend 事件后才移除。
+```
+<p class="msg" v-if="show" v-animation>Hello!</p>
+.animated {
+    display: inline-block;
+}
+
+.animated.v-enter {
+    animation: fadein .5s;
+}
+
+.animated.v-leave {
+    animation: fadeout .5s;
+}
+@keyframes fadeIn {
+    0% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+@keyframes fadeout {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(0);
+    }
+}  
+```
+
+
+CSS 里你需要定义两个动画 keyframes，分别对应进场和出场动画:@keyframes fadeIn{}、@keyframes fadeout{}
+
+(三、)JavaScript钩子函数
+```
+<p v-effect="my-effect">Hello!</p>
+vue effect("my-effect",{
+  enter:function(el,insert,callback){
+    //添加元素
+  };
+  leave:function(el,leave,callback){
+    //移除元素
+  }
+})
+```
+
+
+</xmp>
+
+<div id="disqus_thread"></div>
+<script>
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+    /*
+    var disqus_config = function () {
+        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        
+        s.src = '//httpsfedlovergithubio.disqus.com/embed.js';
+        
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+<script src="https://fedlover.github.io/js/strapdown.js"></script>
+</html>
+
+	

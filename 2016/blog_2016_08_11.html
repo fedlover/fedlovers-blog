@@ -590,24 +590,73 @@ Vue.js 提供非常简单的过渡动画接口。这些过渡动画在 Vue.js �
 只需要在目标元素上添加v-transition指令
 
 ```
-<p class="msg" v-if="show" v-transition>Hello!</p>
+css
+.fade-transition {
+      transition: opacity .3s ease;
+    }
 
-css:
-.msg {
-    transition: all .3s ease;
-    height: 30px;
-    padding: 10px;
-    background-color: #eee;
-    overflow: hidden;
-}
-.msg.v-enter, .msg.v-leave {
-    height: 0;
-    padding: 0 10px;
+.fade-enter,.fade-leave {
     opacity: 0;
 }
+
+html
+<template id="tab01">
+  <div>this is tab01</div>
+</template>
+<template id="tab02">
+  <div>this is tab02</div>
+</template>
+<template id="tab03">
+  <div>this is tab03</div>
+</template>
+<div id="app">
+  <ul>
+    <li><a href="javascript:;" @click="toggle(tab01)">{{tab01}}</a></li>
+    <li><a href="javascript:;" @click="toggle(tab02)">{{tab02}}</a></li>
+    <li><a href="javascript:;" @click="toggle(tab03)">{{tab03}}</a></li>
+  </ul>
+  <div>
+    <component :is="currentView" transition="fade" transition-mode="out-in" keep-alive></component>
+  </div>
+</div>
+
+js
+var tab01=Vue.extend({
+  template:"#tab01"
+})
+var tab02=Vue.extend({
+  template:"#tab02"
+})
+var tab03=Vue.extend({
+  template:"#tab03"
+})
+
+//创建vue实例
+
+var vm=new Vue({
+  el:"#app",
+  data:{
+    tab01:'tab01',
+    tab02:'tab02',
+    tab03:'tab03',
+    currentView:'tab01'
+  },
+  components:{
+    tab01:tab01,
+    tab02:tab02,
+    tab03:tab03
+  },
+  methods:{
+    toggle:function(tab){
+      this.currentView=tab
+    }
+  }
+})
 ```
 
 然后需要给目标元素定义两个CSS类：.v-enter(元素插入到DOM节点后立即移除)、.v-leave(元素被移除瞬间的状态。Vue.js 会在侦听到 transitionend 事件以后移除它。)
+
+效果(http://jsbin.com/dukufopike/edit?html,js,output)
 
 (二、)css animation
 

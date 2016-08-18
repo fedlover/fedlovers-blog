@@ -120,7 +120,7 @@ b、用于监听DOM事件的指令
 ####四、计算属性
 
 vue.js规定绑定表达式为一个的表达式，如果需要多个表达式的逻辑，则需要运用计算属性
-
+a、getter(取值)
 ```
 <p id="app">{{fullMessage}}</p>
 var vm=new Vue({
@@ -137,6 +137,34 @@ var vm=new Vue({
 })
 ```
 效果：(http://jsbin.com/katufadiho/edit?html,js,output)
+b、setter(设置值)
+```
+<div id="app">{{fullName}}</div>
+var vm=new Vue({
+     el:"#app",
+     data:{
+          firstName:"foo",
+          lastName:"bar"
+     },
+     computed:{
+          fullName:{
+                 //取值：
+                 get:function(){
+                         return this.firstName+this.lastName   //foo bar  //希盟 CIM
+                 },
+                 //设置值：
+                 set:function(newValue){
+                       var values=newValue.split("");
+                       this.firstName=values[0];
+                       this.lastName=values[values.length-1];   
+                 }  
+          }
+     }
+})
+vm.fullName="希盟 CIM"
+当调用vm.fullName="希盟 CIM"时，firstName和lastName也相应的更改
+
+```
 
 ####五、class与style绑定
 

@@ -593,11 +593,32 @@ var vm=new Vue({
     }
   })
 ```
-效果(http://jsbin.com/neqihinite/edit?html,js,output)
+效果(http://jsbin.com/nilogoravo/edit?html,js,output)
 
 2、绑定value
 
 语法:v-bind:value=""
+```
+<div id="app">
+  <select v-model="selected">
+    <option v-for="item in items" v-bind:value="item.value">{{item.message}}</option>
+  </select>
+  <span>{{selected}}</span>
+</div>
+var vm=new Vue({
+    el:"#app",
+    data:{
+      selected:"one",
+      items:[
+        {message:"北京",value:"one"},
+        {message:"上海",value:"two"},
+        {message:"广州",value:"three"},
+        {message:"深圳",value:"four"}
+      ]
+    }
+  })
+```
+效果(http://jsbin.com/neqihinite/edit?html,js,output)
 
 ####九、过渡
 

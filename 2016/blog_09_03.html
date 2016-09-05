@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="generator" content="Pearyman'S BLOG">
+<meta name="author" content="Pearyman">
+<meta name="description" content="html5,css3,app" />
+<meta name="keywords" content="Pearyman,BLOG" />
+<title>SASS</title>
+<style type="text/css">
+    #content {
+        margin: 0 auto 50px;
+        width: 66%;
+        min-height: 600px;
+    }
+    
+    #ds-reset {
+        margin: 0 auto;
+        width: 66%;
+    }
+    
+    .ds-powered-by,
+    .navbar,
+    .ds-sync,
+    .ds-comments-info,
+    .ds-meta {
+        display: none;
+    }
+</style>
+<xmp theme="united" style="display:none;">
+##SASS
+###一、SASS介绍
+
+1、sass是一种css的开发工具,提供了很多便利的写法,开发维护简单
+
+2、sass的使用
+
+sass是ruby语言写的,但是两者的语法没有关系,不懂ruby也没事,只是必须安装ruby，然后再安装sass。
+
+###二、SASS的使用
+
+SASS文件就是普通的文本文件,里面可以直接使用css语法。文件后缀名是.scss,意思为Sassy css。
+
+下面的命令,可以在屏幕上显示.scss文件转化的css代码。
+
+`sass test.scss`
+
+
+###三、SASS基本用法
+
+####1、sass的两种格式：
+
+```
+sass写法:
+body
+   background:#eee
+   font-size:12px
+   p background:#ooo
+   
+scss写法：
+body{
+    background:#eee;
+    font-size:12px;
+    p background:#ooo;  
+  }  
+   
+```
+####2、sass的两种注释风格：
+
+标准的css注释/*comment*/,会保留到编译后的文件。
+
+单行注释//comment,只保留在SASS源文件中,编译后被省略。
+
+在/*后面加一个感叹号,表示这是"重要注释"。即使是压缩模式编译,也会保留这行注释,通常可以用于声明版权信息。
+
+```
+//这是单行注释
+/*标准注释*/
+/*!重要注释*/
+```
+####3、变量：
+
+SASS允许使用变量,所有变量以$开头。
+
+```
+$blue:#eee;
+
+div {
+    color:$blue;
+}
+```
+如果变量需要镶嵌在字符串之中,就必须需要写在#{}之中。
+
+```
+$side :left;
+.roude {
+    border-#{$side}-radius:2px;
+}
+```
+####4、计算功能：
+
+SASS允许在代码中使用算式
+
+```
+body {
+    margin:(14px/2);
+    top:50px+100px;
+    right:$var*10%;
+}
+```
+####5、嵌套：
+
+SASS允许选择器嵌套。
+
+```
+div h1{
+    color:red;
+}
+可以写成:
+div{
+    h1{
+        color:red;
+    }
+}
+```
+
+属性也可以嵌套
+
+```
+p{
+    border-color:red;
+}
+
+可以写成:
+p{
+    border:{
+        color:red;
+    }
+}
+```
+###四、代码的重用
+
+####1、继承
+
+SASS允许一个选择器，继承另一个选择器。
+
+```
+.class1{
+    border:1px solid #eee;
+}
+
+class2要继承class1,就要使用@extend命令:
+
+.class2{
+    @extend .class1;
+    font-size:12px;
+}
+```
+
+###五、sass的语句：
+
+条件语句
+
+@if可以用来判断,也可以和@else配套使用
+
+```
+p{
+    @if 1+1=2 {border:1px solid #eee;}
+    @if 5<3 {border:2px dotted #333;}
+}
+
+@if lightness($color) >30% {
+    background:#eee;
+} @else {
+    background:#ooo;
+}
+```
+循环语句
+
+SASS支持for循环,以及作用与for类似的each命令：
+
+```
+@for $i from 1 to 10 {
+    .border-#{$i}{
+        border:#{$i}px solid blue; 
+    }
+}
+
+@each $color in red, blue, yellow{
+    .#{$color}{
+        color:#{$color}
+    }
+}
+```
+同样,也支持while循环
+
+```
+$i: 6;
+
+    @while $i>0{
+        .item-#{$i} {
+            width:2px*$i;
+        }
+        $i:$i-2;
+    }
+```
+####4、sass的自定义函数：
+
+某些方法不够用时,SASS允许用户编写自己的函数
+
+```
+@function double($n){
+    @return $n*2;
+}
+
+#sidebar{
+    width:double(5px);
+}
+```
+
+
+
+
+</xmp>
+<!-- 多说评论框 start -->
+<div class="ds-thread" data-thread-key="1" data-title="前端AD页面制作要点" data-url="http://pearyman.github.io/blog/2015/blog01.html"></div>
+<!-- 多说评论框 end -->
+<script type="text/javascript">
+    var duoshuoQuery = {
+        short_name: "pearyman"
+    };
+    (function () {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';
+        ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<script src="https://fedlover.github.io/js/strapdown.js"></script>
+
+</html>

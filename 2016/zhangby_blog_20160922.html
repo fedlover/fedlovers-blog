@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="generator" content="Pearyman'S BLOG">
+<meta name="author" content="Pearyman">
+<meta name="description" content="html5,css3,app" />
+<meta name="keywords" content="Pearyman,BLOG" />
+<link rel="Shortcut Icon" href="https://avatars2.githubusercontent.com/u/6932025?v=3&s=460" type="image/ico">
+<title>Hello markdown</title>
+<style type="text/css">
+    #content{margin:0 auto 50px; width: 66%;}
+    #disqus_thread{margin:0 auto; width: 66%;}
+  .ds-powered-by,.navbar ,.ds-sync{display: none;}
+</style>
+<xmp theme="united" style="display:none;">
+### css实现多行文本溢出末尾显示省略号
+
+工作中遇到类似问题，所以拿来分享一下
+
+**结构如下：**
+
+```
+<p>
+css实现多行文本溢出末尾显示省略号css实现多行文本溢出末尾显示省略号css实现多行文本溢出末尾显示省略号css实现多行文本溢出末尾显示省略号css实现多行文本溢出末尾显示省略号
+</p>
+```
+
+#### 方法一：
+
+**实现方法：**
+
+```
+p{
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;
+  overflow:hidden;
+  border:1px solid #000;
+  width:28px;
+  height:40px;
+  line-height:20px;
+}
+```
+
+**效果：**
+
+![Alt](http://7xw3j4.com1.z0.glb.clouddn.com/demo.png)
+
+**注：**
+
+  1. display:-webkit-box; 是css3盒子模型属性，是将盒子作为可伸缩盒模型来显示
+
+  2. -webkit-box-orient 表示可伸缩盒模型里面的子元素排列方式，以下是常用的样式表示：
+
+    > horizontal    设置伸缩盒对象的子元素从左到右水平排列
+
+    > vertical    设置伸缩盒对象的子元素从上到下纵向排列
+
+    > inline-axis   设置伸缩盒对象的子元素沿行轴排列
+
+    > block-axis    设置伸缩盒对象的子元素沿块轴排列
+
+  3. -webkit-line-clamp 用来限制在标签内显示的文本的行数，一般我们需要计算一下盒子的高度与文字的行高，相除之后的结果就是在此和模型中可以显示的行数
+
+  4. overflow:hidden 多出盒模型区域，让其隐藏。
+
+**适用范围：**
+
+此样式适用于webkit浏览器与移动端
+
+####方法二：
+
+**实现方法：**
+
+```
+p{
+  position:relative;
+  width:200px;
+  border:1px solid #000;
+  height:40px;
+  line-height:20px;
+  overflow:hidden;
+}
+p:after{
+  content: "...";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding-left:6px;
+  background: -webkit-linear-gradient(left, transparent, #fff 50%); //从左侧开始，背景颜色由透明变为白色，所占区域都为50%
+  background: -o-linear-gradient(right, transparent, #fff 50%);
+  background: -moz-linear-gradient(right, transparent, #fff 50%);
+  background: linear-gradient(to right, transparent, #fff 50%);
+}
+```
+
+**注：**
+
+  1. :after{}  设置伪类after，给p添加一个虚拟标签；
+
+  2. content{'...'}  虚拟标签的内容为‘...’；
+
+  3. background  css3新增的背景颜色线性渐变，不同的前缀代码适配不同内核的浏览器。给虚拟标签添加背景颜色的目的是为了防止盒子末尾出现半个文字；
+
+  4. 盒子的高度应为line-heigth的整数倍，以防止盒子下方漏出半个文字；
+
+  5. 需要的处理的兼容问题：
+
+       IE7及以下版本，不显示content的内容，需要添加标签如：span来做兼容处理；
+
+**适用范围：**
+
+  适用较广，但是此方法有一个缺点，在文字未充满整个盒子的时候，也会出现省略号，这时可以结合js来优化效果。
+
+
+
+
+</xmp>
+
+<div id="disqus_thread"></div>
+<script>
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+    /*
+    var disqus_config = function () {
+        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+
+        s.src = '//httpsfedlovergithubio.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+<script src="https://fedlover.github.io/js/strapdown.js"></script>
+</html>
+

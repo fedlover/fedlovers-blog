@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="generator" content="Pearyman'S BLOG">
+<meta name="author" content="Pearyman">
+<meta name="description" content="html5,css3,app" />
+<meta name="keywords" content="Pearyman,BLOG" />
+<title>理解window对象-BOM的核心</title>
+<style type="text/css">
+    #content{margin:0 auto 50px; width: 66%; min-height: 600px;}
+    #ds-reset{margin:0 auto; width: 66%;}
+	.ds-powered-by,.navbar,.ds-sync,.ds-comments-info,.ds-meta{display: none;}
+</style>
+<xmp theme="united" style="display:none;">
+##window对象
+BOW的核心对象是window,它表示浏览器的一个实例。在浏览器中,window对象有双重角色,它既是通过javascript访问浏览器窗口的一个接口,又是ECMAScript规定的Global对象。这意味着在网页中定义的任何一个对象、变量和函数,都以window作为其Global对象。
+
+###全局作用域
+
+由于window对象扮演着Global对象的角色,因此所会有在全局作用域中声明的变量、函数都会变成window对象的属性和方法。
+
+```
+var age=29;
+
+function sayAge(){
+    alert(this.age);
+}
+
+alert(window.age);//29
+sayAge();//29
+window.sayAge();//29
+```
+###窗口的位置
+
+IE、Safari、Opera和Chrome都提供了用来确定和修改windowd对象位置的属性和方法:screenLeft和screenTop属性，分别用于表示窗口相对于屏幕左边和上边的位置。Firefox则在screenX和screenY属性中提供相同的窗口位置信息,Safari和Chrome也同时支持这两个属性。使用下列代码可以跨浏览器取得窗口左边和上边的位置。
+
+```
+var left=(typeof window.screenLeft=="number") ? window.screenLeft || window.screenX;
+
+var top=(typeof window.screenTop=="number") ? window.screenTop || window.screenY;
+```
+首先确定下screenLeft和screenTop属性是否存在,如果是(在IE、Safari、Opera和Chrome中)取得这两个属性的值。如果不存在(在Firefox中),则取得screenX和screenY的值。
+
+###窗口大小
+
+跨浏览器确定一个窗口的大小不是一件简单的事。IE9、Firefox、Safari、Opera和Chrome均为此提供了4个属性:innerWidth、innerHeight、outerWidth和outerHeight。在IE9、Firefox、Safari中,outerWidth和outerHeight返回浏览器窗口本身的尺寸。innerWidth、innerHeight表示该容器中页面视图区的大小(减去边框宽度)。在Chrome中,outerWidth和outerHeight与innerWidth、innerHeight返回相同的值,即视口的大小而非浏览器窗口的大小。
+
+对于移动设备,window.innerWidth和window.innerHeight保存着可见视口,也就是屏幕上可见页面区域的大小。移动IE浏览器不支持这些属性,丹通过document.documentElement.clientWidth和document.documentElement.clientHeight提供了相同的信息。随着页面的缩放，这些值也会相应变化。
+
+###间歇调用和超时调用
+
+超时调用:
+
+超时调用需要使用window对象的setTimeout()方法。
+
+```
+//推荐的调用的方式
+
+setTimeout(function(){
+    alert("hello world");
+},1000);
+```
+间歇调用:
+
+间歇调用需要使用window对象的setInterval()方法。
+
+```
+//推荐调用的方式
+
+setInterval(function(){
+    alert("hello world")
+},1000)
+
+```
+调用setInterval()方法也会返回一个间歇调用id，该id可用于在将来某个时刻取消间歇调用。要取消尚未执行的间歇调用，可以使用clearInterval()方法传入相应的间歇调用ID。取消间歇调用的重要性远远高于取消超时调用。间歇调用将会一直执行到页面卸载。
+
+```
+var num=0;
+    max=10;
+    intervalId=null;
+    function incrementNumber(){
+        num++;
+        //如果执行次数到达了max设定的值，则取消后续尚未执行的调用
+        if(num==max){
+            clearInterval(intervalId);
+            alert("done");
+        }
+    }
+    
+    intervalId=setInterval(incrementNumber,500);
+```
+
+</xmp>
+<!-- 多说评论框 start -->
+<div class="ds-thread" data-thread-key="1" data-title="js检测手机是否安装某一app" data-url="http://pearyman.github.io/blog/2015/blog02.html"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"pearyman"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<script src="https://fedlover.github.io/js/strapdown.js"></script>
+</html>

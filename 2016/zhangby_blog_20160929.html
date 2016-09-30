@@ -247,6 +247,8 @@ each val, key in obj
 <li>foo: bar</li>
 ```
 
+***
+
 ### 六.条件语句
 
 **jade里面的条件语句是没有圆括号的**
@@ -264,6 +266,8 @@ else
 ```
 <h1>hello world</h1>
 ```
+
+***
 
 ### 七.Mixin
 
@@ -287,30 +291,39 @@ ul#books
 </ul>
 ```
 
+***
 
+### 七.模板继承，包含和追加
 
+1. Jade 支持通过 block 和 extends 关键字来实现模板继承。
 
+2. 使用block定义一个块代码并调用，在页面开头使用extend xx.jade来继承某一jade文件中的block；
 
+3. include 允许静态包含一段Jade, 或者别的存放在单个文件中的东西比如CSS, HTML，非常常见的例子是包含头部和页脚。
 
+4. Jade允许前置和追加blocks。比如，假设在所有页面的头部都加上默认的脚本
 
+例如：
 
+```
+html
+  head
+    block head
+      script(src='/vendor/jquery.js')
+      script(src='/vendor/caustic.js')
+  body
+    block content
+```
 
+在默认的脚本之外添加一些其他的脚本，可以直接append上代码块：
 
+```
+extends layout.jade //上一页面
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+block append head
+  script(src='/vendor/three.js')
+  script(src='/game.js')
+```
 
 </xmp>
 

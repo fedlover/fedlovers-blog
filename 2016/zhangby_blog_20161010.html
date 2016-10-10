@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="generator" content="Pearyman'S BLOG">
+<meta name="author" content="Pearyman">
+<meta name="description" content="html5,css3,app" />
+<meta name="keywords" content="Pearyman,BLOG" />
+<link rel="Shortcut Icon" href="https://avatars2.githubusercontent.com/u/6932025?v=3&s=460" type="image/ico">
+<title>Hello markdown</title>
+<style type="text/css">
+    #content{margin:0 auto 50px; width: 66%;}
+    #disqus_thread{margin:0 auto; width: 66%;}
+  .ds-powered-by,.navbar ,.ds-sync{display: none;}
+</style>
+<xmp theme="united" style="display:none;">
+
+## 数组及字符串的方法
+
+### 数组常用的11个方法
+
+首先明确，我们需要从四个维度总结数组的常用方法:
+
+1. 此方法的作用什么
+
+2. 此方法有无参数；如果有，参数是什么
+
+3. 此方法是否有返回值；如果有，返回值是什么
+
+4. 原数组是否发生变化
+
+#### push
+
+1. 将数组末尾追加一项
+
+2. 参数是要增加那一项
+
+3. 返回值是追加一项后新数组的长度
+
+4. 原数组发生变化
+
+```
+var arr=[11,22,33];
+var newArr=arr.push(44);
+console.log(newArr,arr); // newArr->4   arr->[11,22,33,44]
+
+```
+
+#### pop
+
+1. 删除数组末尾一项
+
+2. 没有参数
+
+3. 返回值是删除的那一项（也就是数组最后一项）
+
+4. 原数组发生变化
+
+```
+var arr=[11,22,33];
+var newArr=arr.pop();
+console.log(newArr,arr); // newArr->33   arr->[11,22]
+```
+
+#### unshift
+
+1. 向数组首位追加一项
+
+2. 参数是追加的内容
+
+3. 返回值是新数组的长度
+
+4. 原数组发生变化
+
+```
+var arr=[11,22];
+var newArr=arr.unshift(33);
+console.log(newArr,arr); // newArr->4   arr->[33,11,22]
+```
+
+#### shift
+
+1. 删除数组第一项
+
+2. 没有参数
+
+3. 返回值是删除的内容
+
+4. 原数组发生变化
+
+```
+var arr=[11,22,33];
+var newArr=arr.shift();
+console.log(newArr,arr); // newArr->4   arr->[22,33]
+```
+
+#### splice
+
+splice的用法很多
+
+1. 参数有三个：  no1：截取的开始索引；no2：截取的个数；no3：往数组中添加的内容；
+
+2. 根据参数的不同，可以截取数组中的某一项，或者连续几项，或者往数组某个位置中添加项，返回值都是截取的到的项
+
+3. 返回值是截取的内容
+
+4. 原数组都发生变化
+
+***
+
+- 只有一个参数，表示一直截取到数组最后
+
+```
+var arr=[1,2,3,4,5,6];
+var newArr=arr.splice(4); // 截取索引为4到最后的所有项
+console.log(newArr,arr); // newArr->[5,6]   arr->[1,2,3,4]
+```
+
+- 两个参数，可以截取若干项
+
+```
+var arr=[1,2,3,4,5,6];
+var newArr=arr.splice(1,3); //从索引1开始，截取3个
+console.log(newArr,arr); //newArr->[2,3,4]   arr->[1,5,6]
+```
+
+- 三个参数，可以替换
+
+```
+var arr=[1,2,3,4,5,6];
+var newArr=arr.splice(1,3,2,2,2); //从索引1开始，截取3个，并替换成2,2,2
+console.log(newArr.arr); //newArr->[2,3,4]   arr->[1,2,2,2,5,6]
+```
+
+- 如果想直接给数组添加项，可以使用 `arr.splice(n,0,n,n,n)` 可以直接添加到索引n处的前面
+
+- `arr.splice(0,0,111)` 就相当于在数组首位添加内容，效果和 `arr.unshift(111)` 是一样的
+
+#### slice
+
+1. 参数有三个； no1：开始的索引；no2：结束的索引；
+
+2. 根据参数的不同，可以复制数组一部分，或者一项，或者复制整个数组
+
+3. 返回值是复制出来的新数组
+
+4. 原数组没有发生变化
+
+***
+
+- 一个参数,可以复制某一索引以后的所有项；如果这个参数为0，就是复制整个数组
+
+```
+var arr=[1,2,3,4,5,6];
+var newArr=arr.slice(3); //复制索引 3 以后所有项
+console.log(newArr.arr); // newArr->[4,5,6]  arr->[1,2,3,4,5,6]
+```
+
+- 两个参数，复制指定的若干项（包前不包后）
+
+```
+var arr=[1,2,3,4,5,6];
+var newArr=arr.slice(0,2); // 复制从索引为0到索引为 2 的项，包括第 0 项，不包括第 2 项
+console.log(newArr,arr); // newArr->[1,2]
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+</xmp>
+
+<div id="disqus_thread"></div>
+<script>
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+    /*
+    var disqus_config = function () {
+        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+
+        s.src = '//httpsfedlovergithubio.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+<script src="https://fedlover.github.io/js/strapdown.js"></script>
+</html>
+

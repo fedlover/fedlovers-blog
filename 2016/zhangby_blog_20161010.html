@@ -16,9 +16,7 @@
 </style>
 <xmp theme="united" style="display:none;">
 
-## 数组常用方法总结
-
-### 数组常用的11个方法
+## 数组常用的11个方法
 
 首先明确，我们需要从四个维度总结数组的常用方法:
 
@@ -30,7 +28,7 @@
 
 4. 原数组是否发生变化
 
-#### push
+### push
 
 1. 将数组末尾追加一项
 
@@ -47,7 +45,7 @@ console.log(newArr,arr); // newArr->4   arr->[11,22,33,44]
 
 ```
 
-#### pop
+### pop
 
 1. 删除数组末尾一项
 
@@ -63,7 +61,7 @@ var newArr=arr.pop();
 console.log(newArr,arr); // newArr->33   arr->[11,22]
 ```
 
-#### unshift
+### unshift
 
 1. 向数组首位追加一项
 
@@ -79,7 +77,7 @@ var newArr=arr.unshift(33);
 console.log(newArr,arr); // newArr->4   arr->[33,11,22]
 ```
 
-#### shift
+### shift
 
 1. 删除数组第一项
 
@@ -95,7 +93,7 @@ var newArr=arr.shift();
 console.log(newArr,arr); // newArr->4   arr->[22,33]
 ```
 
-#### splice
+### splice
 
 splice的用法很多
 
@@ -137,7 +135,7 @@ console.log(newArr.arr); //newArr->[2,3,4]   arr->[1,2,2,2,5,6]
 
 - `arr.splice(0,0,111)` 就相当于在数组首位添加内容，效果和 `arr.unshift(111)` 是一样的
 
-#### reverse
+### reverse
 
 1. 反转数组
 
@@ -153,7 +151,7 @@ var newArr=arr.reverse();
 console.log(newArr.arr); //newArr->[6,5,4,3,2,1]  arr->[6,5,4,3,2,1]
 ```
 
-#### concat
+### concat
 
 1. 合并数组
 
@@ -170,7 +168,7 @@ var newArr=arr.concat(array);
 console.log(newArr,arr); // newArr->[1,2,3,4,4,4]  arr->[1,2,3]
 ```
 
-#### join
+### join
 
 1. 将数组转为字符串
 
@@ -186,7 +184,7 @@ var newStr=arr.join();
 console.log(newStr,arr); // newStr->'1,2,3' arr->[1,2,3]
 ```
 
-#### slice
+### slice
 
 1. 参数有三个； no1：开始的索引；no2：结束的索引；（参数支持负数，表示从末尾开始算起）
 
@@ -214,7 +212,7 @@ var newArr=arr.slice(0,2); // 复制从索引为0到索引为 2 的项，包括�
 console.log(newArr,arr); // newArr->[1,2]
 ```
 
-#### sort
+### sort
 
 1. 将数组从小到大，或者从大到小排序
 
@@ -226,7 +224,7 @@ console.log(newArr,arr); // newArr->[1,2]
 
 ***
 
-- 数字可以直接用
+- 数字，字母可以直接用
 
 ```
 var arr=[2,5,8,9,0];
@@ -234,22 +232,33 @@ var newArr=arr.sort(funcion(a,b){return a-b;}); // return b-a 可以从大到小
 console.log(newArr,arr); // newArr->[0,2,5,8,9]  arr->[2,5,8,9,0]
 ```
 
-- 数组的每一项是汉字，或者字母的话，可以按照字母表顺序排列
+- 数组的每一项是汉字，可以根据首字母，按照字母表顺序排列
 
 ```
-var arr=['hello','world','我是例子','不用理我'];
-var newArr=arr.sort(function(a,b){return a.localCompare-b.localCompare;}); //
+var arr=['我是','例子','不用','理我'];
+var newArr=arr.sort(function(a,b){return a.localeCompare(b))});
+console.log(newArr,arr); //newArr->["不用","理我","例子","我是"]  arr->['我是','例子','不用','理我']
 ```
 
+*附加：* localeCompare()是用本地特定的顺序来比较两个字符串，返回值是说明比较结果的数字，如果参数小于调用这个方法的变量字符串，则localeCompare()返回小于 0 的数。反之，则该方法返回大于 0 的数。如果两个字符串相等，或根据本地排序规则没有区别，该方法返回 0。
 
+### forEach
 
+1. 循环遍历数组
 
+2. 参数是回调函数
 
+3. 没有返回值
 
+4. 原数组没有发生变化
 
-
-
-
+```
+var arr=[11,22,33,44];
+var newArr=arr.forEach(function(item,index,arr){
+  // item为循环的每一项，index是循环到的索引，arr为原数组
+  // 处理逻辑
+})
+```
 
 </xmp>
 

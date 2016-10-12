@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html>
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -31,7 +31,7 @@
 1、构造器:每个vue应用的起步都通过构造函数创建一个vue根实例， Vue 实例其实正是一个 MVVM 模式中所描述的 ViewModel - 因此在文档中经常会使用vm 这个变量名。
 
 ```
-var vm=new Vue({
+var vm=new Vue({                                                                                                          
   
 })
 ```
@@ -120,11 +120,8 @@ b、用于监听DOM事件的指令
 ####四、计算属性
 
 vue.js规定绑定表达式为一个的表达式，如果需要多个表达式的逻辑，则需要运用计算属性
-<<<<<<< HEAD
+
 a、getter(取值)
-=======
-1、getter(取值)
->>>>>>> lilu
 ```
 <p id="app">{{fullMessage}}</p>
 var vm=new Vue({
@@ -141,7 +138,7 @@ var vm=new Vue({
 })
 ```
 效果：(http://jsbin.com/katufadiho/edit?html,js,output)
-<<<<<<< HEAD
+
 b、setter(设置值)
 ```
 <div id="app">{{fullName}}</div>
@@ -171,35 +168,6 @@ vm.fullName="希盟 CIM"
 
 ```
 
-=======
-2、setter(设置值)
-```
-<div id="demo">{{fullName}}</div>
-var vm = new Vue({
-      el:"#demo", 
-      data: {
-        firstName: 'Foo',
-        lastName: 'Bar'
-      },
-      computed: {
-        fullName: {
-        // getter
-        get: function () {
-          return this.firstName + ' ' + this.lastName
-        },
-        // setter
-        set: function (newValue) {
-          var names = newValue.split(' ')
-          this.firstName = names[0]
-          this.lastName = names[names.length - 1]
-        }
-      }
-      }
-    })
-    vm.fullName="希盟 CIM"  
-    当我们调用vm.fullName="希盟 CIM"时，firstName和lastName就会相应的更改
-```
->>>>>>> lilu
 ####五、class与style绑定
 
 我们用v-bind来处理它们

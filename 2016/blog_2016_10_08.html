@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="generator" content="Pearyman'S BLOG">
+<meta name="author" content="Pearyman">
+<meta name="description" content="html5,css3,app" />
+<meta name="keywords" content="Pearyman,BLOG" />
+<title>javascript之引用类型</title>
+<style type="text/css">
+    #content{margin:0 auto 50px; width: 66%; min-height: 600px;}
+    #ds-reset{margin:0 auto; width: 66%;}
+	.ds-powered-by,.navbar,.ds-sync,.ds-comments-info,.ds-meta{display: none;}
+</style>
+<xmp theme="united" style="display:none;">
+
+##引用类型
+
+引用类型包含:
+
+Object类型
+
+Array类型
+
+Date类型
+
+Function类型
+
+###Object类型
+
+Object是javascript中使用最多的一种类型，虽然它的实例不具备多少功能，但是对于在应用程序中存储和传输数据而言，是非常理想的选择。
+
+####创建Object的两种方法:
+
+(一、)通过new操作符后面跟Object构造函数：
+
+	var person=new Object()
+
+	person.name="希盟"
+
+	person.age=4
+
+(二、)字面量法：
+
+	var person={
+		name: "希盟",
+		age: 12
+	}
+
+	
+
+对象字面量法是开发人员更青睐的一种选择，它不仅代码量少，更给人一种封装的感觉。实际上对象字面量是向函数传递大量可选参数的首选方法。
+
+```
+function showInfo(ages){
+	if(ages.name!=undefined ){
+		alert(ages.name);
+	}
+	if(ages.age!=undefined){
+		alert(ages.age);
+	}
+}
+showInfo({
+	name:"希盟",
+	age:4
+})
+```	
+
+**注意**
+
+使用对象字面量法时，如果留空其花括号，则可以定义值包含默认属性和方法的对象。
+
+```
+var person={}
+
+person.name="希盟",  //和new Object相同
+
+person.age=4
+```	
+
+###Array类型
+
+####创建Array的两种方法:
+
+(一、)Array构造函数法:
+
+	var person1=new Array()
+
+	var person2=new Array(20)
+
+	var person3=new Array("red","blue","green","yellow")
+
+(二、)数组字面量法：
+
+	var person1=[]
+
+	var person2=["red","blue","green","yellow"]	
+
+在读取和设置数组的值时,要使用方括号并提供相应值基于0的数字索引。
+
+	var person=["red","blue","green","yellow"]	//定义一个字符串数组
+
+	alert(person[0]) //读取第一项
+
+	person[1]="black" //修改第二项
+
+	person[4]="organ" //增加第五项
+	
+####数组长度length属性
+
+利用length属性在数组末尾添加新项
+
+	var person=["red","blue","green","yellow"];
+
+	person[person.length]="organ"
+
+数组最后一项的索引始终是length-1,所以下一个新项的位置就是length。	
+
+####转换方法
+
+将数组转换为字符串：
+arrayObj.join(separator) //返回字符串，这个字符串将数组中的每一个值链接起来，中间用separator隔开;
+
+toLocaleString、toString、valueof可以看做是join的特殊用法，不常用。
+
+####操作方法
+
+1、slice方法
+
+slice的参数可以是一个或是多个，即要返回项的起始和结束位置。slice()方法一个参数返回该参数指定的项的开始位置到这个数组的最后一项;两个参数返回指定项的开始位置和指定项的结束位置，不包含结束项;
+
+	var arr=["red","blue","green","yellow","pink"];
+	arr.slice(2)  //green、yellow、pink
+	arr.slice(1,3) //blue、green
+
+2、splice方法
+
+删除: 两个参数:要删除项的开始位置和要删除项的个数,返回剩余的项
+
+	var arr=["red","blue","green","yellow","pink"];
+
+		arr.splice(1,3) //red、pink
+
+插入: 三个参数:开始的位置、要删除的项数、插入的项
+
+	var arr=["red","blue","green","yellow","pink"];
+
+	arr.splice(1,2,"orange","black") //red、orange、black、yellow、pink
+
+替换: 三个参数:开始的位置、要删除的项数、替换的项
+
+	var arr=["red","blue","green","yellow","pink"];
+
+	arr.splice(2,1,"orange") //red、blue、orange、yellow、pink
+
+###Function类型	
+
+####创建函数的三种方法:
+
+函数声明:function sum(){}
+
+函数表达式:var fun=function(){};
+
+构造函数:function Sum(){}
+
+**函数实际上时是对象,每个函数都是Function类型的实例,而且与其他引用类型一样都具有属性和方法。由于函数是对象，函数名实际上是指向函数对象的指针,和其他函数不绑定。**
+
+**注意:**
+
+*使用不带括号的函数名是访问函数指针，而不是调用函数*
+
+	function sum(num1,num2){
+		return num1+num2;
+	}
+	var anotherSum=sum;
+	console.log(anotherSum(10,10)) //20
+	
+
+普通函数和构造函数的区别:
+
+ 	1、构造函数通过new操作符来调用函数;
+
+ 	2、函数内部可以使用this关键字;
+
+ 	3、函数名用大写以便和普通函数区别;
+
+ 	4、构造函数默认不用return返回值;
+
+函数声明和函数表达式的区别:
+
+1、函数表达式后面没有函数名,这是因为给这个变量初始化为一个函数,这个变量就可以引用这个函数,因此不需要再有一个函数名。此外,还要注意,这个变量名后面会有一个分号，就像我们定义其他变量一样需要加一个分号;
+
+2、解析器在向执行环境中加载数据时,解析器对函数声明和函数表达式的处理是不一样的,解析器会率先读取函数声明,并使其在执行任何代码之前可用(可以访问);至于函数表达式,则必须等到解析器执行到它所在的代码行,才会真正被解释执行。
+	
+	console.log(sum(10,10)) //20;
+	function sum(num1,num2){
+		return num1+num2;
+	}
+
+
+	console.log(sum(10,10)); //undefined;
+	var anotherSum=function(num1,num2){
+		return num1+num2
+	};
+
+
+作为值的函数
+
+在javascript中函数名本身就是变量,因此函数可以作为值来引用。可以像传递参数一样,把一个函数当作一个参数传递给另一个函数,而且还可以把一个函数当作另一个函数的结果返回。
+	
+	function callSomeFunction(someFunction,someArgument){ 
+		return someFunction(someArgument); 
+	} 
+	function add(num){
+		return num;
+	}
+
+	var anotherAdd=function(add,10); //两个参数:第一个是函数;第二个是传递给函数的参数;
+	console.log(anotherAdd); //10;
+
+	函数中套函数
+
+	function sum(){
+		return function add(num1,num2){
+			return num1+num2;
+		}
+	}
+	var anotherSum=sum();
+	console.log(anotherSum(10,20));
+
+函数内部的属性
+
+1、arguments; 2、this;
+
+通过使用arguments.callee来实现递归。
+
+	function sum(num){
+		if(num<=1){
+			return num=1;
+		}else{
+			return num*arguments.callee(num-1);
+		}
+	}
+
+this是函数在执行时所处了作用域。
+
+	window.color="red";
+
+	var o={color:"blue"};
+
+	function multColor(){
+		console.log(this.color);
+	}
+	
+	multColor() //red;
+	o.multColo=multColor;
+	o.multColo //blue;
+
+由于**函数在调用之前,this是不确定的,因此this可能会在代码执行过程中引用不同的对象,谁调用它,this就指向谁**。当在全局作用域中调用sayColor()时,this引用的是全局对象 window;换句话说,对this.color求值会转换成对window.color求值,于是结果就是'red'。而当把这个函数赋给对象o并调用o.sayColor()时,this引用的是对象o,因此对this.color求值会转换成对o.color求值,结果就是'blue'。
+
+函数的属性和方法
+
+*函数是对象,每个对象都有属性和方法。每个函数都包含两个属性:length和prototype*以下不做详细说明。 	
+</xmp>
+<!-- 多说评论框 start -->
+<div class="ds-thread" data-thread-key="1" data-title="js检测手机是否安装某一app" data-url="http://pearyman.github.io/blog/2015/blog02.html"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"pearyman"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<script src="https://fedlover.github.io/js/strapdown.js"></script>
+</html>

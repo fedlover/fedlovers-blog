@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="generator" content="Pearyman'S BLOG">
+<meta name="author" content="Pearyman">
+<meta name="description" content="html5,css3,app" />
+<meta name="keywords" content="Pearyman,BLOG" />
+<link rel="Shortcut Icon" href="https://avatars2.githubusercontent.com/u/6932025?v=3&s=460" type="image/ico">
+<title>Hello markdown</title>
+<style type="text/css">
+    #content{margin:0 auto 50px; width: 66%;}
+    #disqus_thread{margin:0 auto; width: 66%;}
+  .ds-powered-by,.navbar ,.ds-sync{display: none;}
+</style>
+<xmp theme="united" style="display:none;">
+
+## 字符串常用的11个方法
+
+注：字符串的所有方法都不影响原字符串；所以，从以下2个维度总结每个方法的作用：
+
+1. 此方法的作用什么
+
+2. 此方法有无参数；如果有，参数是什么
+
+3. 返回值是什么
+
+### charAt
+
+1. 通过索引找对应的字符
+
+2. 参数是索引
+
+3. 返回值是查找到的字符
+
+```
+var str='wishilizi';
+var newStr=str.charAt(2);
+console.log(newStr); // ->'s'
+```
+
+### charCodeAt
+
+1. 通过索引找对应的字符的ASCII码值
+
+2. 参数是索引
+
+3. 返回值是查找到的ASCII码值
+
+```
+var str='wishilizi';
+var newStr=str.charCodeAt(2);
+console.log(newStr); // ->115  字母s在ASCII码表的值是115
+```
+
+### substr
+
+1. 字符串截取
+
+2. 参数一是截取的开始索引（包括此索引的值），参数二是截取的个数；参数为0，或者不写参数，都表示复制整个字符串；
+
+3. 返回值是查找到的字符串
+
+```
+var str='woshilizi';
+var newStr=str.substr(2,3);
+console.log(newStr); //-> 'shi'
+```
+
+### substring
+
+1. 字符串截取
+
+2. 参数一是截取的开始索引，参数二是截取的结束索引（包前不包后），参数0，或者不写参数，都表示复制整个字符串；
+
+3. 返回值是查找到的字符串
+
+```
+var str='woshilizi';
+var newStr=str.substring(2,3);
+console.log(newStr); //-> 's'
+```
+
+### slice
+
+1. 字符串截取，用法与substring相同
+
+2. 参数与substring用法相同，但是slice支持负数，表示从后往前按索引截取字符
+
+3. 返回值是查找到的字符串
+
+```
+var str='woshilizi';
+var newStr=str.slice(-3,-1);
+console.log(newStr); //-> 'iz' 表示从倒数第4个截取到倒数第2个
+```
+
+### indexOf
+
+1. 从左往右，根据字符查找索引
+
+2. 参数为查找的字符
+
+3. 返回值是第一次查找到的字符的索引，如果找不到，返回-1
+
+```
+var str='woshilizi';
+var index=str.indexOf('i');
+console.log(newStr); //-> 4
+```
+
+### lastIndexOf
+
+1. 从右往左，按照字符串查找索引
+
+2. 参数为要查找的字符
+
+3. 返回值是第一次找的字符索引，没有找到，返回-1
+
+```
+var str='woshilizi';
+var index=str.lastIndexOf('i');
+console.log(index); // -> 8
+```
+
+### split
+
+1. 将字符串转为数组
+
+2. 参数为分隔符，如果字符串里没有包含该分隔符，相当于直接将字符串转为数组，如果包含此分隔符，是按照分隔符来划分为数组的每一项
+
+3. 返回值是新的数组
+
+```
+var str='woshilizi';
+var arr=str.split('+');
+console.log(arr); // ->["woshilizi"]
+```
+
+```
+var str='woshilizi';
+var arr=str.split('i');
+console.log(arr); // ->["wosh", "l", "z", ""]
+```
+
+### replace
+
+1. 替换字符串
+
+2. 在不使用正则的情况下，参数一是被替换的字符串，参数二是替换的字符串；使用正则的话，参数一是正则，参数而是回调函数；
+
+3. 返回值是替换后的新字符串
+
+***
+
+- 不使用正则的情况下：
+
+```
+var str='woshilizi';
+var newStr=str.replace('wo','wobu');
+console.log(newStr); // -> "wobushilizi"
+```
+
+- 使用正则的情况下：
+
+```
+var str='woshilizi';
+var reg=/^[a-z]{2}/g;
+var newStr=str.replace(reg,function(){
+  return 'wobu'
+});
+console.log(newStr); // ->"wobushilizi"
+```
+
+### toUpperCase & toLowerCase
+
+1. 将字符转为大写 & 小写
+
+2. 没有参数
+
+3. 返回值是大写的字符串 & 小写的字符串
+
+```
+var str='woshilizi';
+var newStr=str.toUpperCase('woshi');
+console.log(newStr); // -> "WOSHILIZI"
+
+var lowerStr=newStr.toLowerCase();
+console.log(lowerStr); // -> "woshilizi"
+```
+
+</xmp>
+
+<div id="disqus_thread"></div>
+<script>
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+    /*
+    var disqus_config = function () {
+        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+
+        s.src = '//httpsfedlovergithubio.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+<script src="https://fedlover.github.io/js/strapdown.js"></script>
+</html>
+

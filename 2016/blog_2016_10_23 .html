@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="generator" content="Pearyman'S BLOG">
+<meta name="author" content="Pearyman">
+<meta name="description" content="html5,css3,app" />
+<meta name="keywords" content="Pearyman,BLOG" />
+<title>URL参数解析成一个Json对象</title>
+<style type="text/css">
+    #content{margin:0 auto 50px; width: 66%; min-height: 600px;}
+    #ds-reset{margin:0 auto; width: 66%;}
+	.ds-powered-by,.navbar,.ds-sync,.ds-comments-info,.ds-meta{display: none;}
+</style>
+<xmp theme="united" style="display:none;">
+##URL参数解析成一个Json对象
+
+####问题：请编写一个Javascript函数parseQueryString,它的用途是把URL参数解析为一个对象。
+
+eg：var obj=parseQueryString(url);
+                    
+创建对象的三种形式:
+                    
+    一：
+       var Person=new Object();
+           Person.name="Sun";
+           Person.age=24;
+        
+    二：
+        对象字面量表达式
+        var Person={
+                name: "Sun",
+                age: 24
+        }
+PS:
+
+1、在这个例子中,比较适合使用第二种形式,向obj中添加元素；
+
+2、split("&"),如果url只有一个参数的时候,没有"&"的时候，也不会报错，只会返回array[0]function parseQueryString(url)
+       
+     function parseQueryString(url){
+           var obj={},
+               keyvalue=[],
+               key="",
+               value="";
+        var paraString=url.substring(url.indexOf("?")+1,url.length).split("&");
+
+    console.log(paraString);
+    //["unc=o400493_1", "s=o400493_1"]
+
+    for(var i in paraString){
+
+        keyvalue=paraString[i].split("=");
+        console.log(keyvalue);
+        //["unc", "o400493_1"]、["s", "o400493_1"]
+        key=keyvalue[0];
+        value=keyvalue[1];
+        obj[key]=value;
+    }                                                            
+        return obj;                  
+           }                                                                                                                              
+    parseQueryString("https://hao.qq.com/?unc=o400493_1&s=o400493_1")        
+ 	 	 	 	
+</xmp>
+<!-- 多说评论框 start -->
+<div class="ds-thread" data-thread-key="1" data-title="js检测手机是否安装某一app" data-url="http://pearyman.github.io/blog/2015/blog02.html"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"pearyman"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<script src="https://fedlover.github.io/js/strapdown.js"></script>
+</html>

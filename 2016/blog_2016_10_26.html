@@ -15,6 +15,104 @@
 </style>
 <xmp theme="united" style="display:none;">
 ###margin与padding大比拼
+
+margin(边界):元素周围生成的额外的空白区。"空白区"是指其他元素不能出现在父元素可见背景的区域。
+
+padding(内边距):判断的依据是边框离内容正文的距离。
+
+margin三个值：第一个是上、第二个是左右、第三是下。(不推荐使用)
+
+在css中是使用margin还是padding我一直都是靠两个词"感觉"、"瞎试"。关于什么时候用margin什么时候用padding,众说纷纭。而且margin和padding在许多地方的效果往往都是一模一样的，而且你也不能说这个一定要用margin那个一定要用padding,因为实际的效果都是一样的。根据网上的总结归纳大致发现了这几条还是比较靠谱的:
+
+**何时应当使用margin:**
+
+1、需要在border外侧添加空白时;
+
+2、空白处不要背景色时;
+
+3、上下相连的两个盒子之间的空白，相互抵消的，如：15px+20px的margin,将得到20px的空白;
+
+**何时应当使用padding:**
+1、需要在border内测添加空白时;
+
+2、空白处需要背景色时;
+
+3、上下相连的两个盒子的之间的空白，希望等于两者之和时，如：15px+20px的padding,将得到35px的padding;
+
+**个人认为：margin是用来隔开元素与元素的间距，(比如:div与div之间的距离)；padding是用来隔开元素与内容的间隔(比如:`<p>我需要一点呼吸空</p>`)。margin用于布局分开元素使元素与元素互不相干；padding用于元素与内容之间的间隔，让内容（文字）与（包裹）元素之间有一段“呼吸距离”。**
+
+```
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+</head>
+<body>
+<div class="top"></div>  
+<div class="middle">
+  <div class="m_top">我是firstchild,我想与我的父元素隔开点距离，这样我会舒服些。</div>
+  <div class="m_bottom">我是secondchild,我想与哥哥隔开点距离，我也想有点自己的空间，如果能与底边有点距离就更好了。</div>
+</div>
+</body>
+</html>
+
+css:
+*{margin:0; padding:0;}
+.top{width: 160px; height: 50px;background: yellow;}
+.middle{width: 160px; background: #f00; border-top:3px solid #000;}
+.m_top{margin-top:30px;}
+.m_bottom{margin-top:10px;}
+
+```
+(http://jsbin.com/detasijeni/edit?html,css,output)
+
+上面这个效果看起来很不错，达到了我们需要实现的目标。然而，我们细细查看下这个代码，对照下我们上文所说的规则，m-top用了margin-top:30px来隔开父元素与他的距离，m-bottom也用margin-top:15px来隔开他与m-top的距离，咋看之下挺符合我们所说的margin是用来隔开元素与元素的间距。但是他符合我们所说的margin用于布局分开**元素使元素与元素互不相干吗？**
+
+这里我想说的是NO，m-top同middle属于一种父子元素关系，又是一种包裹元素与内容的关系，他们之间从拟人化的角度来讲，不应该是老死不相干的局面。我们再来看我们为什么要让m-top与他的父元素隔开的距离，从表现的角度上来看，文字与边靠的太近，肯定不好看。让文字与元素边隔开的距离，既美观，又使得文字有了足够的“呼吸空间”，方便阅读，这恰恰符合padding用于元素与内容之间的间隔让内容（文字）与（包裹）元素之间有个“呼吸距离”。可见这个时候margin显然不是很好的选择。
+
+我们来试着这么修改：
+
+```
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+</head>
+<body>
+<div class="top"></div>  
+<div class="middle">
+  <div class="m_top">我是firstchild,我想与我的父元素隔开点距离，这样我会舒服些。</div>
+  <div class="m_bottom">我是secondchild,我想与哥哥隔开点距离，我也想有点自己的空间，如果能与底边有点距离就更好了。</div>
+</div>
+</body>
+</html>
+
+*{margin:0; padding:0;}
+.top{width: 160px; height: 50px;background: yellow;}
+.middle{padding: 30px 0; width: 160px; background: #f00; border-top:3px solid #000;}
+.m_top{}
+.m_bottom{margin-top:10px;}
+
+```
+(http://jsbin.com/denuxoqoti/edit?html,css,output)
+
+我们来看看这么写的好处吧：
+1.外观依旧良好，结构清晰也没有破坏布局
+2.书写规范、代码量减少、重用性好。
+
+我们可以看到在middle中去除了不需要的border-top，改为更为实用的padding:30px 0，让middle中的内容有了足够的“呼吸空间”，以后还可以随时随地修改这个padding，让内容文字的“呼吸空间”增大或者缩小，随时随地只修改一个middle的padding就能搞定所有包裹元素与内部内容的规划。
+
+请注意这里是父元素应用padding，使得与其内容产生间隙，这是符合我们翻译为“补白”精髓，而padding也恰恰是在这儿最能体检他的价值。这个例子把第一个元素的margin-top去除，在父元素中应用padding。反过来，你会想，既然margin-top不好用，那么我第一个元素用padding-top不是也能达到效果么。恭喜你，你已经前进了一步了，的确使用padding-top即让第一元素与外包裹元素产生了呼吸距离，而且也不会出现所谓的垂直外边距重叠问题， 但是我依旧不推荐你这么做。为什么呢？我们来设想这么一个情况吧，假如有一天，你这个模块要产生变动，新需求要删除这个m_top，替换为m_other，会怎么样呢？
+
+如果你把原先的m_top给删除掉了，新来的元素根本就没有定义上边距或者上补白，那么他就会自然顶在头部，不是理想的效果。的确，你可以为了他新写一个css来让他距离头部多一点空隙，但是你该怎么写？直接改m_other吗？如果其他页面里面也有m_other那么你会把其他地方的m_other布局打乱。恩，那么我用.middle .m_other{padding-top:10px;}怎么样可以吧。恩，可以可以，可是你不觉得这么累吗？每次修改，都要增加这一个多余的代码就为了简简单单的隔开点距离，久而久之，你的css文件代码会臃肿不堪，可移植性大大削弱。
+
+这里你把包裹的div类似“封装”好一个环境，而且这个div内已经留有足够的内容的“呼吸空间”，你只需要改内容，内容所要考虑到得位置边距问题，外包的div元素早已经帮你预留好了，你用起来方便，今后改起来也方便，直接找到middle修改padding即可。
+
+最终优化：
+
+一般在父元素中使用padding，这样父元素和子元素之间就会留白，避免元素紧挨着边框，影响美观。
 </xmp>
 <!-- 多说评论框 start -->
 <div class="ds-thread" data-thread-key="1" data-title="js检测手机是否安装某一app" data-url="http://pearyman.github.io/blog/2015/blog02.html"></div>

@@ -30,6 +30,10 @@ currentTarget和target的区别:
 
 target指向被单击的对象，currentTarget指向当前事件活动的对象(一般是指向父级)。
 
+比如说现在有A和B， A.addChild(B) A监听鼠标点击事件 那么当点击B时，target是B，currentTarget是A 
+
+也就是说，currentTarget始终是监听事件者，而target是事件的真正发出者。
+
 ```
   <div class="out">
     out

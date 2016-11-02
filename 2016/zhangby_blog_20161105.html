@@ -84,7 +84,32 @@ call和apply可以也改变一个函数的this指向，但是使用 `fn.call(obj
 
 call和apply第二个参数都是给fn的实参，但是传递的形式不同，call方法传递的参数，是一个个的；apply方法需要把他们放到一个数组里，传递给主体函数。
 
+*使用call或者apply改变THIS和非严格模式有一些区别*
+
+非严格模式下：
+
+```
+function fn(){console.log(this)}
+fn.call(); //this->window
+fn.call(null); //this->null
+fn.call(undefined); //this->undefined
+
+```
+
+严格模式下：
+
+```
+function fn(){console.log(this)}
+fn.call(); //this->undefined
+fn.call(null); //this->null
+fn.call(undefined); //this->undefined
+
+```
+
 #### 构造函数中的this指的是实例
+
+
+
 
 
 

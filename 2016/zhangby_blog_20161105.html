@@ -15,19 +15,9 @@
   .ds-powered-by,.navbar ,.ds-sync{display: none;}
 </style>
 <xmp theme="united" style="display:none;">
-### 关于静态页面布局的一些细节
+### 页面间的通信
 
-##### 定位
 
-- 关于定位常用的是`display:relative`和`display:absolute`，相对定位是不脱离文档流的，它在文档中还占有自己的位置、而绝对定位已经脱离了文档流。与定位相关的还有一个属性也很常用`z-index`,它只对定位的兄弟元素起作用，改变层级，来决定谁在谁的前面，默认是0。
-
-##### 行内块级元素
-
-- 如果想实现横向排列的效果，使用浮动是首选，但是`display:inline-block`也可以达到这个效果。但是`display:inline-block`会有一个小小的问题，就是在人为不设定内外边距的情况下，行内块级元素之间也会有一个小小的边距。它是我们在写代码时编辑的空格造成的。解决这个问题，可以手动地将空格标注掉，但是这样会显得结构杂乱无章，也可以设置大容器的`font-size：0`再在小容器中设置对应的字体。
-
-##### margin的塌陷问题
-
-- 上下排列的盒子上面盒子的`margin-bottom`和下面盒子的`margin-top`会产生重叠，最后只保留大的margin值，显示这不是我们想要的结构。解决这个问题，可以尽量使用单一的`margin-top`或者`margin-bottom`,或者将其中一个盒子用一个大盒子包起来，给大盒子设置任意属性，比如`border:1px solid transparent`，建议后者。
 
 </xmp>
 

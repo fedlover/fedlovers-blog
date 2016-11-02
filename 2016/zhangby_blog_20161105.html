@@ -15,7 +15,90 @@
   .ds-powered-by,.navbar ,.ds-sync{display: none;}
 </style>
 <xmp theme="united" style="display:none;">
-### 页面间的通信
+### Javascript中的this指向
+
+喜欢用JS中的this，因为它很灵活，又不喜欢用this，因为它太灵活
+
+#### 自执行函数中的this永远是window
+
+#### 事件中
+
+给一个对象的某一种行为绑定一个方法，当行为被触发，执行对应的方法，方法中的this就是：当前元素本身
+
+*但是在写法上还是需要一提的：*
+
+```
+function fn(){console.log(this);}
+box.onclick=fn; // 把fn定义的部分赋值给点击事件,此时fn没有执行,当点击的时候才执行的
+box.onclick=fn(); //首先执行fn,此时fn中的this是window,然后把执行的返回结果undefined赋值给点击事件
+
+```
+
+#### 普通函数中
+
+this的指向不会在乎这个方法是在哪里定义的，它只会看方法执行的主体是谁：
+
+```
+var obj={
+  name:'lizi',
+  fn:fn
+};
+function fn(){console.log(this)}
+fn(); // window
+obj.fn(); // 'lizi'
+
+```
+
+回调函数里面的this是window
+
+```
+var arr=[2,12];
+arr.sort(function(a,b){
+  console.log(this); // window
+})
+```
+
+#### call,apply,bind 改变this指向
+
+```
+var obj={name:'lizi',fn:fn};
+function fn(){
+var self=this;
+  var arr1=[2,12];
+  console.log(this); // obj
+  arr1.sort(function(a,b){
+    console.log(this,self.name); // window   'lizi'
+  })
+  var arr2=[2,10];
+  arr2.sort(function(){
+    console.log(this); // obj
+  }.bind(this))
+}
+obj.fn(); // fn方法中的this是obj
+
+```
+
+call和apply可以也改变一个函数的this指向，但是使用 `fn.call(obj)` 或者 `fn.apply(obj)` 就直接将函数执行了，所以慎用。
+
+当然，他俩还是有一点差距的，差距就在于他俩第二个参数：
+
+call和apply第二个参数都是给fn的实参，但是传递的形式不同，call方法传递的参数，是一个个的；apply方法需要把他们放到一个数组里，传递给主体函数。
+
+#### 构造函数中的this指的是实例
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
